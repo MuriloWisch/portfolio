@@ -3,137 +3,383 @@ import { CommonModule } from '@angular/common';
 import { TranslationService } from '../../../core/services/translation.service';
 import { ScrollService } from '../../../core/services/scroll.service';
 
-// Interface usada para representar formação, trilhas e marcos de evolução
-export interface Certification {
-  id: number;
+interface JourneyItem {
+  period: string;
   title: string;
-  issuer: string;
-  issuerLogo: string;   // emoji ou URL de logo
-  year: number;
-  credentialUrl?: string;
-  skills: string[];
-  color: string;        // cor de destaque do card
-  category: string;
+  subtitle: string;
+  description: string;
+  tags: string[];
+  side: 'left' | 'right';
 }
 
-/**
- * CertificationsComponent - Cards de formação e evolução técnica
- */
 @Component({
   selector: 'app-certifications',
   standalone: true,
   imports: [CommonModule],
-  template: `
-    <section id="certifications" class="py-20 bg-[var(--color-card)]">
-      <div class="section-container">
+  styles: [`
+    .journey-section {
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 15% 20%, rgba(5, 230, 150, 0.08), transparent 24%),
+        radial-gradient(circle at 85% 30%, rgba(0, 201, 255, 0.08), transparent 24%),
+        linear-gradient(180deg, rgba(9, 15, 30, 0.92), rgba(13, 20, 36, 0.98));
+    }
 
-        <!-- Header da seção -->
+    .journey-section::before,
+    .journey-section::after {
+      content: '';
+      position: absolute;
+      border-radius: 999px;
+      filter: blur(70px);
+      opacity: 0.28;
+      pointer-events: none;
+      animation: journeyOrbFloat 9s ease-in-out infinite;
+    }
+
+    .journey-section::before {
+      width: 240px;
+      height: 240px;
+      top: 80px;
+      left: -60px;
+      background: rgba(5, 230, 150, 0.16);
+    }
+
+    .journey-section::after {
+      width: 280px;
+      height: 280px;
+      right: -70px;
+      bottom: 40px;
+      background: rgba(0, 201, 255, 0.14);
+      animation-delay: 1.4s;
+    }
+
+    .journey-panel {
+      position: relative;
+      overflow: hidden;
+      border-radius: 28px;
+      border: 1px solid rgba(5, 230, 150, 0.14);
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01)),
+        rgba(15, 23, 42, 0.58);
+      box-shadow: 0 30px 80px rgba(2, 8, 23, 0.28);
+      backdrop-filter: blur(18px);
+      animation: journeyPanelFloat 6s ease-in-out infinite;
+    }
+
+    .journey-panel::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(135deg, rgba(5, 230, 150, 0.07), transparent 35%),
+        linear-gradient(315deg, rgba(0, 201, 255, 0.06), transparent 30%);
+      pointer-events: none;
+    }
+
+    .journey-panel {
+      padding: 2rem;
+    }
+
+    .journey-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      padding: 0.45rem 0.85rem;
+      border-radius: 999px;
+      border: 1px solid rgba(5, 230, 150, 0.22);
+      background: rgba(5, 230, 150, 0.08);
+      color: #b6ffe4;
+      font-size: 0.74rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .journey-stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.85rem;
+      margin-top: 1.5rem;
+    }
+
+    .journey-stat {
+      padding: 1rem;
+      border-radius: 18px;
+      border: 1px solid rgba(5, 230, 150, 0.12);
+      background: rgba(5, 230, 150, 0.05);
+    }
+
+    .journey-stat strong {
+      display: block;
+      font-size: 1.2rem;
+      color: #ffffff;
+      font-weight: 800;
+    }
+
+    .journey-stat span {
+      display: block;
+      margin-top: 0.25rem;
+      color: #94a3b8;
+      font-size: 0.78rem;
+    }
+
+    .journey-timeline {
+      position: relative;
+      margin-top: 1.75rem;
+      padding: 0.25rem 0;
+    }
+
+    .journey-timeline::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(180deg, rgba(5, 230, 150, 0.8), rgba(0, 201, 255, 0.18));
+      transform: translateX(-50%);
+    }
+
+    .journey-timeline::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 0;
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: #05e696;
+      transform: translateX(-50%);
+      box-shadow: 0 0 18px rgba(5, 230, 150, 0.6);
+      animation: timelinePulse 2.4s ease-in-out infinite;
+    }
+
+    .journey-item {
+      position: relative;
+      width: calc(50% - 1.5rem);
+      margin-bottom: 1.1rem;
+      padding: 1rem 1rem 1rem 1.2rem;
+      border-radius: 20px;
+      border: 1px solid rgba(148, 163, 184, 0.12);
+      background: rgba(15, 23, 42, 0.52);
+      transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .journey-item-left {
+      margin-right: auto;
+    }
+
+    .journey-item-right {
+      margin-left: auto;
+    }
+
+    .journey-item:hover {
+      transform: translateY(-6px);
+      border-color: rgba(5, 230, 150, 0.26);
+      box-shadow: 0 18px 40px rgba(5, 230, 150, 0.08);
+    }
+
+    .journey-item::before {
+      content: '';
+      position: absolute;
+      top: 1.15rem;
+      width: 12px;
+      height: 12px;
+      border-radius: 999px;
+      background: #05e696;
+      box-shadow: 0 0 0 4px rgba(5, 230, 150, 0.15), 0 0 18px rgba(5, 230, 150, 0.45);
+    }
+
+    .journey-item-left::before {
+      right: -1.86rem;
+    }
+
+    .journey-item-right::before {
+      left: -1.86rem;
+    }
+
+    .journey-period {
+      display: inline-flex;
+      padding: 0.25rem 0.6rem;
+      border-radius: 999px;
+      background: rgba(0, 201, 255, 0.08);
+      border: 1px solid rgba(0, 201, 255, 0.16);
+      color: #67e8f9;
+      font-size: 0.72rem;
+      font-family: 'JetBrains Mono', monospace;
+      margin-bottom: 0.75rem;
+    }
+
+    .journey-item h3 {
+      color: #f8fafc;
+      font-size: 1rem;
+      font-weight: 700;
+      margin: 0 0 0.15rem;
+    }
+
+    .journey-item h4 {
+      color: #cbd5e1;
+      font-size: 0.86rem;
+      margin: 0 0 0.65rem;
+      font-weight: 500;
+    }
+
+    .journey-item p {
+      color: #94a3b8;
+      font-size: 0.9rem;
+      line-height: 1.7;
+      margin: 0 0 0.85rem;
+    }
+
+    .journey-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+    }
+
+    .journey-tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.28rem 0.7rem;
+      border-radius: 999px;
+      border: 1px solid rgba(5, 230, 150, 0.2);
+      background: rgba(5, 230, 150, 0.08);
+      color: #b6ffe4;
+      font-size: 0.72rem;
+      font-family: 'JetBrains Mono', monospace;
+      transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+    }
+
+    .journey-tag:hover {
+      transform: translateY(-2px);
+      border-color: rgba(5, 230, 150, 0.36);
+      background: rgba(5, 230, 150, 0.14);
+    }
+
+    .journey-stat {
+      transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .journey-stat:hover {
+      transform: translateY(-4px);
+      border-color: rgba(5, 230, 150, 0.28);
+      box-shadow: 0 16px 36px rgba(5, 230, 150, 0.08);
+    }
+
+    @keyframes journeyOrbFloat {
+      0%, 100% {
+        transform: translate3d(0, 0, 0);
+      }
+      50% {
+        transform: translate3d(14px, -18px, 0);
+      }
+    }
+
+    @keyframes journeyPanelFloat {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-4px);
+      }
+    }
+
+    @keyframes timelinePulse {
+      0%, 100% {
+        opacity: 1;
+        box-shadow: 0 0 18px rgba(5, 230, 150, 0.6);
+      }
+      50% {
+        opacity: 0.72;
+        box-shadow: 0 0 28px rgba(5, 230, 150, 0.9);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .journey-panel {
+        border-radius: 22px;
+      }
+
+      .journey-panel {
+        padding: 1.25rem;
+      }
+
+      .journey-stats {
+        grid-template-columns: 1fr;
+      }
+
+      .journey-timeline {
+        padding-left: 1.2rem;
+      }
+
+      .journey-timeline::before {
+        left: 0.2rem;
+        transform: none;
+      }
+
+      .journey-timeline::after {
+        left: 0.2rem;
+        transform: translateX(-40%);
+      }
+
+      .journey-item,
+      .journey-item-left,
+      .journey-item-right {
+        width: 100%;
+        margin-left: 0;
+        margin-right: 0;
+      }
+
+      .journey-item::before,
+      .journey-item-left::before,
+      .journey-item-right::before {
+        left: -1.42rem;
+        right: auto;
+      }
+    }
+  `],
+  template: `
+    <section id="certifications" class="py-20 journey-section">
+      <div class="section-container">
         <div class="mb-12">
           <p class="font-mono text-primary-500 text-sm mb-2 reveal">// {{ t('certifications.title') }}</p>
           <h2 class="section-title mb-4 reveal" style="transition-delay: 0.1s">
             {{ t('certifications.title') }}
           </h2>
-          <p class="text-[var(--color-text-muted)] max-w-xl reveal" style="transition-delay: 0.2s">
+          <p class="text-[var(--color-text-muted)] max-w-2xl reveal" style="transition-delay: 0.2s">
             {{ t('certifications.subtitle') }}
           </p>
         </div>
 
-        <!-- Estatísticas da jornada -->
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-12 reveal" style="transition-delay: 0.3s">
-          <div *ngFor="let stat of certStats"
-               class="text-center p-4 rounded-2xl border border-[var(--color-border)]">
-            <div class="text-3xl mb-1">{{ stat.emoji }}</div>
-            <div class="font-bold text-xl text-gradient">{{ stat.value }}</div>
-            <div class="text-xs text-[var(--color-text-muted)] mt-1">{{ stat.label }}</div>
-          </div>
-        </div>
+        <div class="max-w-5xl mx-auto">
+          <div class="journey-panel reveal" style="transition-delay: 0.1s">
+            <div class="relative z-10">
+              <span class="journey-kicker">Formacao em andamento</span>
 
-        <!-- Grid de formação e trilhas -->
-        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          <div
-            *ngFor="let cert of certifications; let i = index"
-            class="card p-6 relative overflow-hidden reveal"
-            [style.transition-delay]="(i * 0.1) + 's'"
-          >
-            <!-- Linha de cor no topo do card -->
-            <div
-              class="absolute top-0 left-0 right-0 h-1 rounded-t-2xl"
-              [style.background]="cert.color"
-            ></div>
-
-            <!-- Header do card -->
-            <div class="flex items-start justify-between mb-4">
-              <div class="flex items-center gap-3">
-                <!-- Logo da instituição (emoji placeholder) -->
-                <div
-                  class="w-12 h-12 rounded-xl flex items-center justify-center text-2xl"
-                  [style.background]="cert.color + '20'"
-                >
-                  {{ cert.issuerLogo }}
-                </div>
-                <div>
-                  <p class="text-xs text-[var(--color-text-muted)]">{{ t('certifications.issued_by') }}</p>
-                  <p class="font-semibold text-sm">{{ cert.issuer }}</p>
+              <div class="journey-stats">
+                <div class="journey-stat" *ngFor="let stat of journeyStats">
+                  <strong>{{ stat.value }}</strong>
+                  <span>{{ stat.label }}</span>
                 </div>
               </div>
 
-              <!-- Ano -->
-              <span class="font-mono text-xs text-[var(--color-text-muted)] bg-[var(--color-border)]
-                           px-2 py-1 rounded-lg">
-                {{ cert.year }}
-              </span>
-            </div>
-
-            <!-- Título do card -->
-            <h3 class="font-bold text-base mb-3 leading-tight">{{ cert.title }}</h3>
-
-            <!-- Skills do card -->
-            <div class="flex flex-wrap gap-1.5 mb-4">
-              <span *ngFor="let skill of cert.skills" class="badge text-xs">{{ skill }}</span>
-            </div>
-
-            <!-- Botão de credencial -->
-            <a
-              *ngIf="cert.credentialUrl"
-              [href]="cert.credentialUrl"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="flex items-center gap-1.5 text-sm font-medium transition-colors"
-              [style.color]="cert.color"
-            >
-              <span class="material-icons text-base">verified</span>
-              {{ t('certifications.view_credential') }}
-              <span class="material-icons text-sm">open_in_new</span>
-            </a>
-          </div>
-        </div>
-
-        <!-- Seção de progresso / aprendizado contínuo -->
-        <div class="mt-16 p-8 rounded-2xl border border-[var(--color-border)] bg-gradient-to-r
-                    from-primary-500/5 to-blue-500/5 reveal">
-          <div class="flex flex-col sm:flex-row items-start sm:items-center gap-6">
-            <div class="text-5xl">🎯</div>
-            <div class="flex-1">
-              <h3 class="font-bold text-lg mb-1">Aprendizado Contínuo</h3>
-              <p class="text-[var(--color-text-muted)] text-sm mb-4">
-                Sempre em busca de novos conhecimentos. Atualmente estudando:
-              </p>
-              <div class="space-y-3">
-                <div *ngFor="let learning of currentLearning">
-                  <div class="flex justify-between text-sm mb-1">
-                    <span class="font-medium flex items-center gap-1.5">
-                      {{ learning.emoji }} {{ learning.name }}
-                    </span>
-                    <span class="text-primary-500 font-mono">{{ learning.progress }}%</span>
+              <div class="journey-timeline">
+                <article
+                  class="journey-item"
+                  *ngFor="let item of journey"
+                  [class.journey-item-left]="item.side === 'left'"
+                  [class.journey-item-right]="item.side === 'right'"
+                >
+                  <span class="journey-period">{{ item.period }}</span>
+                  <h3>{{ item.title }}</h3>
+                  <h4>{{ item.subtitle }}</h4>
+                  <p>{{ item.description }}</p>
+                  <div class="journey-tags">
+                    <span class="journey-tag" *ngFor="let tag of item.tags">{{ tag }}</span>
                   </div>
-                  <div class="h-1.5 bg-[var(--color-border)] rounded-full">
-                    <div
-                      class="h-full rounded-full transition-all duration-1000"
-                      [style.width]="learning.progress + '%'"
-                      [style.background]="'linear-gradient(90deg, #05e696, #00c9ff)'"
-                    ></div>
-                  </div>
-                </div>
+                </article>
               </div>
             </div>
           </div>
@@ -147,54 +393,37 @@ export class CertificationsComponent implements OnInit {
   private translationService = inject(TranslationService);
   private scrollService = inject(ScrollService);
 
-  certStats = [
-    { emoji: '🎓', value: 'PUC', label: 'Instituição' },
-    { emoji: '📚', value: '3º',  label: 'Período atual' },
-    { emoji: '🎯', value: '1ª',  label: 'Oportunidade buscada' },
-    { emoji: '⚙️', value: 'Backend', label: 'Foco técnico' },
+  journeyStats = [
+    { value: 'PUC Minas', label: 'Instituicao' },
+    { value: '3o periodo', label: 'Fase atual' },
+    { value: 'Backend', label: 'Direcao principal' },
   ];
 
-  // =============================================
-  // Formação e marcos reais
-  // =============================================
-  certifications: Certification[] = [
+  journey: JourneyItem[] = [
     {
-      id: 1,
+      period: 'Agora',
       title: 'Análise e Desenvolvimento de Sistemas',
-      issuer: 'PUC Minas',
-      issuerLogo: '🎓',
-      year: 2026,
-      skills: ['ADS', 'Lógica', 'Banco de Dados', 'Desenvolvimento Web'],
-      color: '#05E696',
-      category: 'education',
+      subtitle: 'PUC Minas',
+      description: 'Na faculdade, venho desenvolvendo base pratica em criacao de solucoes reais, trabalho em equipe, desenvolvimento de software, banco de dados e contato com tecnologias como C# e React Native em projetos e atividades.',
+      tags: ['Trabalho em equipe', 'C#', 'React Native', 'Banco de Dados', 'Solucoes reais'],
+      side: 'left',
     },
     {
-      id: 2,
-      title: 'Trilha Backend com Java e Spring Boot',
-      issuer: 'Projetos e estudos práticos',
-      issuerLogo: '☕',
-      year: 2026,
-      skills: ['Java', 'Spring Boot', 'APIs REST', 'Spring Security', 'JPA / Hibernate'],
-      color: '#F59E0B',
-      category: 'backend',
+      period: 'Foco principal',
+      title: 'Especializacao em Backend',
+      subtitle: 'Projetos, estudos praticos e evolucao tecnica',
+      description: 'Direcionando a formacao para Java e Spring Boot, com experiencia em APIs REST, integracao com banco de dados, autenticacao e organizacao de arquitetura.',
+      tags: ['Java', 'Spring Boot', 'APIs REST', 'JPA / Hibernate', 'Spring Security'],
+      side: 'right',
     },
     {
-      id: 3,
-      title: 'Base Web e Integração com Frontend',
-      issuer: 'Projetos acadêmicos e pessoais',
-      issuerLogo: '🅰️',
-      year: 2026,
-      skills: ['Angular', 'TypeScript', 'JavaScript', 'HTML', 'CSS', 'Bootstrap', 'Tailwind CSS'],
-      color: '#3B82F6',
-      category: 'frontend',
+      period: 'Complementar',
+      title: 'Base web e integracao com frontend',
+      subtitle: 'Projetos academicos e pessoais',
+      description: 'Desenvolvendo repertorio em interfaces, consumo de APIs e integracao entre frontend e backend para entregar aplicacoes completas e bem estruturadas.',
+      tags: ['Angular', 'TypeScript', 'JavaScript', 'HTML', 'CSS', 'Bootstrap', 'Tailwind CSS'],
+      side: 'left',
     },
-  ];
-
-  // Cursos em andamento
-  currentLearning = [
-    { emoji: '🔐', name: 'Spring Security, OAuth2 e JWT', progress: 82 },
-    { emoji: '🧩', name: 'Microserviços e arquitetura em camadas', progress: 74 },
-    { emoji: '🐳', name: 'Docker, CI/CD e boas práticas de deploy', progress: 63 },
   ];
 
   ngOnInit(): void {

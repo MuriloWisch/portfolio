@@ -9,12 +9,13 @@ export interface Project {
   title: string;
   description: string;
   longDescription: string;
-  image: string;      // URL da imagem ou emoji de placeholder
+  image: string;      // URL da imagem do projeto
   tags: string[];
   category: 'frontend' | 'backend' | 'fullstack';
-  githubUrl: string;
+  githubUrl?: string;
   demoUrl?: string;
   featured: boolean;
+  primary?: boolean;
 }
 
 /**
@@ -24,6 +25,66 @@ export interface Project {
   selector: 'app-projects',
   standalone: true,
   imports: [CommonModule],
+  styles: [`
+    .projects-grid {
+      align-items: start;
+    }
+
+    .project-card {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-card-primary {
+      border-color: rgba(5, 230, 150, 0.55);
+      box-shadow:
+        0 0 0 1px rgba(5, 230, 150, 0.45),
+        0 24px 70px rgba(5, 230, 150, 0.2);
+    }
+
+    .project-card-primary::before {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      border-radius: 16px;
+      padding: 1px;
+      background: linear-gradient(135deg, rgba(5, 230, 150, 0.9), rgba(0, 201, 255, 0.6), rgba(5, 230, 150, 0.9));
+      -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+      opacity: 0.95;
+    }
+
+    .project-primary-badge {
+      position: absolute;
+      top: 0.9rem;
+      left: 0.9rem;
+      z-index: 2;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.4rem 0.75rem;
+      border-radius: 999px;
+      background: rgba(5, 230, 150, 0.12);
+      border: 1px solid rgba(5, 230, 150, 0.35);
+      color: #b6ffe4;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 0 18px rgba(5, 230, 150, 0.18);
+    }
+
+    @media (min-width: 1024px) {
+      .project-card-primary {
+        transform: translateY(-18px) scale(1.05);
+        z-index: 3;
+      }
+    }
+  `],
   template: `
     <section id="projects" class="py-20">
       <div class="section-container">
@@ -57,29 +118,32 @@ export interface Project {
         </div>
 
         <!-- Grid de projetos -->
-        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 projects-grid">
           <div
             *ngFor="let project of filteredProjects(); let i = index"
-            class="card group cursor-pointer reveal"
+            class="card group cursor-pointer reveal project-card"
+            [class.project-card-primary]="project.primary"
             [style.transition-delay]="(i * 0.1) + 's'"
             (click)="openModal(project)"
           >
             <!-- Imagem / thumbnail -->
             <div class="h-48 rounded-t-2xl overflow-hidden relative bg-gradient-to-br
                         from-primary-500/10 to-blue-500/10 flex items-center justify-center">
-              <!-- Substitua por <img [src]="project.image"> quando tiver imagens reais -->
-              <span class="text-6xl">{{ project.image }}</span>
-
-              <!-- Badge de destaque -->
-              <span *ngIf="project.featured"
-                    class="absolute top-3 right-3 badge text-xs">
-                ⭐ Destaque
+              <span *ngIf="project.primary" class="project-primary-badge">
+                <span class="material-icons text-sm">auto_awesome</span>
+                Projeto Principal
               </span>
+              <img
+                [src]="project.image"
+                [alt]="project.title"
+                class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+              />
 
               <!-- Overlay com ações rápidas -->
               <div class="absolute inset-0 bg-gray-900/80 opacity-0 group-hover:opacity-100
                           transition-opacity duration-300 flex items-center justify-center gap-4">
                 <a
+                  *ngIf="project.githubUrl"
                   [href]="project.githubUrl"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -147,9 +211,12 @@ export interface Project {
           (click)="$event.stopPropagation()"
         >
           <!-- Header do modal -->
-          <div class="h-48 relative bg-gradient-to-br from-primary-500/20 to-blue-500/20
-                      flex items-center justify-center text-6xl rounded-t-2xl">
-            {{ selectedProject()!.image }}
+          <div class="h-56 relative bg-gradient-to-br from-primary-500/20 to-blue-500/20 rounded-t-2xl overflow-hidden">
+            <img
+              [src]="selectedProject()!.image"
+              [alt]="selectedProject()!.title"
+              class="w-full h-full object-cover object-top"
+            />
             <button
               (click)="closeModal()"
               class="absolute top-4 right-4 w-8 h-8 flex items-center justify-center
@@ -174,6 +241,7 @@ export interface Project {
             <!-- Botões de ação -->
             <div class="flex flex-wrap gap-3">
               <a
+                *ngIf="selectedProject()!.githubUrl"
                 [href]="selectedProject()!.githubUrl"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -220,26 +288,39 @@ export class ProjectsComponent implements OnInit {
   projects: Project[] = [
     {
       id: 1,
+      title: 'EcoPointMap',
+      description: 'Aplicação web voltada à sustentabilidade para mapear pontos de reciclagem e facilitar o descarte correto de resíduos.',
+      longDescription: 'Aplicação web criada para disponibilizar informações sobre pontos de reciclagem e promover a sustentabilidade por meio de uma navegação simples e acessível. O projeto foi construído com JavaScript, Bootstrap e HTML, com foco em organização visual, usabilidade e incentivo ao descarte consciente.',
+      image: 'assets/ecopoint-project.png',
+      tags: ['JavaScript', 'Bootstrap', 'HTML', 'Sustentabilidade'],
+      category: 'frontend',
+      githubUrl: 'https://github.com/MuriloWisch/EcoPointMap',
+      demoUrl: 'https://icei-puc-minas-pmv-ads.github.io/pmv-ads-2025-1-e1-proj-web-t6-v2-pmv-ads-2025-1-e1-proj-ecopointmap/codigo-fonte/src/Home/index.html',
+      featured: true,
+    },
+    {
+      id: 2,
       title: 'WischGym',
       description: 'Plataforma web para gestão de academias, cobrindo alunos, professores, treinos, matrículas, pagamentos e notificações em tempo real.',
       longDescription: 'Plataforma completa construída com backend em Spring Boot 3 e frontend em Angular 17+. O projeto inclui autenticação JWT com refresh token rotativo, OAuth2 com Google One Tap, Spring Security com controle por role, upload de mídia com Cloudinary, agendamentos automáticos com @Scheduled e uma camada frontend com guards de rota, interceptors HTTP e lazy loading.',
-      image: '🏋️',
+      image: 'assets/wischgym-project.png',
       tags: ['Java', 'Spring Boot', 'Angular', 'TypeScript', 'JWT', 'OAuth2', 'MySQL', 'Cloudinary'],
       category: 'fullstack',
       githubUrl: 'https://github.com/MuriloWisch/WischGym_Backend',
       demoUrl: 'https://wischgym-rjb3qdmdh-murilowischs-projects.vercel.app/',
       featured: true,
+      primary: true,
     },
     {
-      id: 2,
-      title: 'EcoPointMap',
-      description: 'Aplicação web voltada à sustentabilidade para mapear pontos de reciclagem e facilitar o descarte correto de resíduos.',
-      longDescription: 'Aplicação web criada para disponibilizar informações sobre pontos de reciclagem e promover a sustentabilidade por meio de uma navegação simples e acessível. O projeto foi construído com JavaScript, Bootstrap e HTML, com foco em organização visual, usabilidade e incentivo ao descarte consciente.',
-      image: '♻️',
-      tags: ['JavaScript', 'Bootstrap', 'HTML', 'Sustentabilidade'],
-      category: 'frontend',
-      githubUrl: 'https://github.com/MuriloWisch/EcoPointMap',
-      demoUrl: 'https://icei-puc-minas-pmv-ads.github.io/pmv-ads-2025-1-e1-proj-web-t6-v2-pmv-ads-2025-1-e1-proj-ecopointmap/codigo-fonte/src/Home/index.html',
+      id: 3,
+      title: 'Cuidar+',
+      description: 'Sistema para gerenciamento de medicamentos voltado a idosos em situação de polifarmácia, cuidadores e familiares.',
+      longDescription: 'Projeto desenvolvido com C# e ASP.NET para organizar e acompanhar prescrições, reduzir falhas terapêuticas relacionadas a esquecimento ou administração inadequada, identificar possíveis interações medicamentosas e oferecer suporte mais seguro a cuidadores e familiares. A proposta busca melhorar a adesão ao tratamento com acompanhamento e lembretes, contribuindo para mais segurança e qualidade de vida ao público idoso.',
+      image: 'assets/cuidar-project.png',
+      tags: ['C#', 'ASP.NET', 'Gestão de medicamentos', 'Saúde', 'Polifarmácia'],
+      category: 'backend',
+      githubUrl: 'https://github.com/ICEI-PUC-Minas-PMV-ADS/pmv-ads-2025-2-e2-proj-int-t6-g2-saude-e-bem-estar-cuidar/tree/main',
+      demoUrl: 'https://cuidarmais-hua0cqh7grcqcphn.brazilsouth-01.azurewebsites.net/',
       featured: true,
     },
   ];
@@ -264,6 +345,9 @@ export class ProjectsComponent implements OnInit {
         this.projects.filter(p => p.category === category)
       );
     }
+
+    // Reaplica o reveal nos cards recriados após trocar o filtro.
+    setTimeout(() => this.scrollService.initScrollReveal(), 0);
   }
 
   openModal(project: Project): void {
