@@ -1,4 +1,4 @@
-# 🚀 Portfolio Angular — Alexandre Silva
+# 🚀 Portfolio Angular
 
 Portfólio pessoal moderno construído com **Angular 17**, **TailwindCSS** e **Angular Material**.
 
