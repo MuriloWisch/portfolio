@@ -1,0 +1,78 @@
+{
+  "nav": {
+    "home": "Home",
+    "projects": "Projects",
+    "certifications": "Certifications",
+    "contact": "Contact",
+    "download_cv": "Download CV"
+  },
+  "home": {
+    "greeting": "Hi, I'm",
+    "name": "Murilo Wisch",
+    "title": "ADS Student focused on Backend",
+    "subtitle": "Seeking my first opportunity in technology, with a main focus on backend development using Java and Spring Boot, REST APIs, security, databases, and scalable solutions.",
+    "cta_projects": "View Projects",
+    "cta_contact": "Get in Touch",
+    "available": "Available for opportunities",
+    "stats_years": "current semester",
+    "stats_projects": "main projects",
+    "stats_clients": "main focus",
+    "skills_title": "Technologies I use",
+    "about_title": "About me",
+    "about_p1": "I am an Analysis and Systems Development student at PUC Minas, currently in the 3rd semester, focused on backend development using Java and Spring Boot. I have experience building REST APIs, integrating databases, and using Git for version control.",
+    "about_p2": "I am passionate about technology, software development, and challenges that create constant learning. Outside coding, I train at the gym daily, enjoy video games, and value discipline, consistency, and growth through small continuous actions.",
+    "location": "PUC Minas | 3rd semester"
+  },
+  "projects": {
+    "title": "Projects",
+    "subtitle": "A selection of my most relevant work",
+    "view_github": "GitHub",
+    "view_demo": "Demo",
+    "filter_all": "All",
+    "filter_frontend": "Frontend",
+    "filter_backend": "Backend",
+    "filter_fullstack": "Full-Stack"
+  },
+  "certifications": {
+    "title": "Education and Growth",
+    "subtitle": "My academic foundation and the technical areas I am developing as I work toward my first opportunity in technology",
+    "issued_by": "Issued by",
+    "view_credential": "View Credential",
+    "year": "Year"
+  },
+  "contact": {
+    "title": "Contact",
+    "subtitle": "I am looking for my first opportunity in tech and open to talking about internships, projects, and professional connections",
+    "name_label": "Name",
+    "name_placeholder": "Your full name",
+    "email_label": "Email",
+    "email_placeholder": "your@email.com",
+    "subject_label": "Subject",
+    "subject_placeholder": "What do you want to talk about?",
+    "message_label": "Message",
+    "message_placeholder": "Describe your project or question...",
+    "send": "Send Message",
+    "sending": "Sending...",
+    "success": "Message sent successfully! I'll get back to you soon.",
+    "error": "An error occurred. Please try again.",
+    "or_find_me": "Or find me at",
+    "email_direct": "Direct Email",
+    "location": "GitHub",
+    "response_time": "Response time",
+    "response_time_value": "Less than 24h"
+  },
+  "footer": {
+    "made_with": "Made with",
+    "and": "and",
+    "by": "by",
+    "rights": "All rights reserved.",
+    "back_to_top": "Back to top"
+  },
+  "theme": {
+    "light": "Light Mode",
+    "dark": "Dark Mode"
+  },
+  "lang": {
+    "switch_to": "Mudar para Português"
+  }
+}
