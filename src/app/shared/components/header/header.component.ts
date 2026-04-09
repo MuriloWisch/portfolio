@@ -58,31 +58,40 @@ import { ScrollService } from '../../../../core/services/scroll.service';
           <!-- Toggle de idioma -->
           <button
             (click)="toggleLang()"
-            class="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-current
-                   text-xs font-mono font-medium transition-all duration-200
-                   hover:border-primary-500 hover:text-primary-500"
+            class="header-toggle lang-toggle"
             [title]="t('lang.switch_to')"
           >
-            <span class="text-base">{{ currentLang() === 'pt-BR' ? '🇧🇷' : '🇺🇸' }}</span>
-            <span>{{ currentLang() === 'pt-BR' ? 'PT' : 'EN' }}</span>
+            <span class="toggle-pill" [class.toggle-pill-right]="currentLang() !== 'pt-BR'"></span>
+            <span class="toggle-option" [class.toggle-option-active]="currentLang() === 'pt-BR'">
+              <span class="text-sm">🇧🇷</span>
+              <span>PT</span>
+            </span>
+            <span class="toggle-option" [class.toggle-option-active]="currentLang() !== 'pt-BR'">
+              <span class="text-sm">🇺🇸</span>
+              <span>EN</span>
+            </span>
           </button>
 
           <!-- Toggle de tema -->
           <button
             (click)="themeService.toggle()"
-            class="w-9 h-9 flex items-center justify-center rounded-full
-                   transition-all duration-200 hover:bg-primary-500/10 hover:text-primary-500"
+            class="header-toggle theme-toggle"
             [title]="themeService.isDark() ? t('theme.light') : t('theme.dark')"
           >
-            <span class="material-icons text-xl">
-              {{ themeService.isDark() ? 'light_mode' : 'dark_mode' }}
+            <span class="toggle-pill" [class.toggle-pill-right]="!themeService.isDark()"></span>
+            <span class="toggle-option" [class.toggle-option-active]="themeService.isDark()">
+              <span class="material-icons text-base">dark_mode</span>
+            </span>
+            <span class="toggle-option" [class.toggle-option-active]="!themeService.isDark()">
+              <span class="material-icons text-base">light_mode</span>
             </span>
           </button>
 
           <!-- Botão Download CV - Desktop apenas -->
           <a
-            href="/assets/cv.pdf"
-            download
+            href="/assets/cv-murilo-wisch.html"
+            target="_blank"
+            rel="noopener noreferrer"
             class="hidden md:flex btn-primary text-sm py-2 px-4"
           >
             <span class="material-icons text-base">download</span>
@@ -120,7 +129,12 @@ import { ScrollService } from '../../../../core/services/scroll.service';
             </a>
           </li>
           <li>
-            <a href="/assets/cv.pdf" download class="btn-primary text-sm py-2 w-full justify-center mt-2">
+            <a
+              href="/assets/cv-murilo-wisch.html"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn-primary text-sm py-2 w-full justify-center mt-2"
+            >
               <span class="material-icons text-base">download</span>
               {{ t('nav.download_cv') }}
             </a>
@@ -156,6 +170,70 @@ import { ScrollService } from '../../../../core/services/scroll.service';
     .nav-link:hover::after,
     .nav-link.active::after {
       transform: translateX(-50%) scaleX(1);
+    }
+    .header-toggle {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      padding: 0.25rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.18);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+      overflow: hidden;
+      isolation: isolate;
+    }
+    .header-toggle:hover {
+      border-color: rgba(5, 230, 150, 0.28);
+      box-shadow: 0 10px 30px rgba(5, 230, 150, 0.08);
+      transform: translateY(-1px);
+    }
+    .lang-toggle {
+      min-width: 104px;
+      justify-content: space-between;
+    }
+    .theme-toggle {
+      min-width: 84px;
+      justify-content: space-between;
+    }
+    .toggle-pill {
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      bottom: 4px;
+      width: calc(50% - 4px);
+      border-radius: 999px;
+      background: linear-gradient(135deg, rgba(5, 230, 150, 0.88), rgba(0, 201, 255, 0.7));
+      box-shadow: 0 0 20px rgba(5, 230, 150, 0.22);
+      transition: transform 0.28s ease;
+      z-index: 0;
+    }
+    .toggle-pill-right {
+      transform: translateX(100%);
+    }
+    .toggle-option {
+      position: relative;
+      z-index: 1;
+      width: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.3rem;
+      padding: 0.45rem 0.7rem;
+      border-radius: 999px;
+      color: var(--color-text-muted);
+      font-size: 0.72rem;
+      font-weight: 700;
+      font-family: 'JetBrains Mono', monospace;
+      transition: color 0.25s ease, transform 0.25s ease;
+    }
+    .toggle-option-active {
+      color: #0a0f1e;
+    }
+    .theme-toggle .toggle-option {
+      padding: 0.45rem 0.85rem;
     }
   `]
 })

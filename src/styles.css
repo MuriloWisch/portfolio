@@ -483,6 +483,7 @@ body {
     rgba(15, 23, 42, 0.16);
   border-radius: 18px;
   transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  transition-delay: 0s !important;
 }
 
 .skills-highlight-card {
@@ -541,6 +542,7 @@ body {
     linear-gradient(180deg, rgba(0, 201, 255, 0.08), rgba(5, 230, 150, 0.03)),
     rgba(15, 23, 42, 0.16);
   transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  transition-delay: 0s !important;
 }
 
 .skills-category-card::before {

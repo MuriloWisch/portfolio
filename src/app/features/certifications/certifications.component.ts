@@ -4,12 +4,17 @@ import { TranslationService } from '../../../core/services/translation.service';
 import { ScrollService } from '../../../core/services/scroll.service';
 
 interface JourneyItem {
-  period: string;
-  title: string;
-  subtitle: string;
-  description: string;
-  tags: string[];
+  period: { pt: string; en: string };
+  title: { pt: string; en: string };
+  subtitle: { pt: string; en: string };
+  description: { pt: string; en: string };
+  tags: { pt: string[]; en: string[] };
   side: 'left' | 'right';
+}
+
+interface JourneyStat {
+  value: { pt: string; en: string };
+  label: { pt: string; en: string };
 }
 
 @Component({
@@ -356,12 +361,12 @@ interface JourneyItem {
         <div class="max-w-5xl mx-auto">
           <div class="journey-panel reveal" style="transition-delay: 0.1s">
             <div class="relative z-10">
-              <span class="journey-kicker">Formacao em andamento</span>
+              <span class="journey-kicker">{{ currentLang() === 'en' ? 'Education in progress' : 'Formacao em andamento' }}</span>
 
               <div class="journey-stats">
                 <div class="journey-stat" *ngFor="let stat of journeyStats">
-                  <strong>{{ stat.value }}</strong>
-                  <span>{{ stat.label }}</span>
+                  <strong>{{ text(stat.value) }}</strong>
+                  <span>{{ text(stat.label) }}</span>
                 </div>
               </div>
 
@@ -372,12 +377,12 @@ interface JourneyItem {
                   [class.journey-item-left]="item.side === 'left'"
                   [class.journey-item-right]="item.side === 'right'"
                 >
-                  <span class="journey-period">{{ item.period }}</span>
-                  <h3>{{ item.title }}</h3>
-                  <h4>{{ item.subtitle }}</h4>
-                  <p>{{ item.description }}</p>
+                  <span class="journey-period">{{ text(item.period) }}</span>
+                  <h3>{{ text(item.title) }}</h3>
+                  <h4>{{ text(item.subtitle) }}</h4>
+                  <p>{{ text(item.description) }}</p>
                   <div class="journey-tags">
-                    <span class="journey-tag" *ngFor="let tag of item.tags">{{ tag }}</span>
+                    <span class="journey-tag" *ngFor="let tag of tags(item.tags)">{{ tag }}</span>
                   </div>
                 </article>
               </div>
@@ -392,36 +397,64 @@ export class CertificationsComponent implements OnInit {
 
   private translationService = inject(TranslationService);
   private scrollService = inject(ScrollService);
+  currentLang = this.translationService.currentLang;
 
-  journeyStats = [
-    { value: 'PUC Minas', label: 'Instituicao' },
-    { value: '3o periodo', label: 'Fase atual' },
-    { value: 'Backend', label: 'Direcao principal' },
+  journeyStats: JourneyStat[] = [
+    {
+      value: { pt: 'PUC Minas', en: 'PUC Minas' },
+      label: { pt: 'Instituicao', en: 'Institution' },
+    },
+    {
+      value: { pt: '3o periodo', en: '3rd semester' },
+      label: { pt: 'Fase atual', en: 'Current stage' },
+    },
+    {
+      value: { pt: 'Backend', en: 'Backend' },
+      label: { pt: 'Direcao principal', en: 'Main direction' },
+    },
   ];
 
   journey: JourneyItem[] = [
     {
-      period: 'Agora',
-      title: 'Análise e Desenvolvimento de Sistemas',
-      subtitle: 'PUC Minas',
-      description: 'Na faculdade, venho desenvolvendo base pratica em criacao de solucoes reais, trabalho em equipe, desenvolvimento de software, banco de dados e contato com tecnologias como C# e React Native em projetos e atividades.',
-      tags: ['Trabalho em equipe', 'C#', 'React Native', 'Banco de Dados', 'Solucoes reais'],
+      period: { pt: 'Agora', en: 'Now' },
+      title: { pt: 'Analise e Desenvolvimento de Sistemas', en: 'Analysis and Systems Development' },
+      subtitle: { pt: 'PUC Minas', en: 'PUC Minas' },
+      description: {
+        pt: 'Na faculdade, venho desenvolvendo base pratica em criacao de solucoes reais, trabalho em equipe, desenvolvimento de software, banco de dados e contato com tecnologias como C# e React Native em projetos e atividades.',
+        en: 'At university, I have been building a practical foundation in creating real solutions, teamwork, software development, databases, and technologies such as C# and React Native through projects and coursework.',
+      },
+      tags: {
+        pt: ['Trabalho em equipe', 'C#', 'React Native', 'Banco de Dados', 'Solucoes reais'],
+        en: ['Teamwork', 'C#', 'React Native', 'Databases', 'Real solutions'],
+      },
       side: 'left',
     },
     {
-      period: 'Foco principal',
-      title: 'Especializacao em Backend',
-      subtitle: 'Projetos, estudos praticos e evolucao tecnica',
-      description: 'Direcionando a formacao para Java e Spring Boot, com experiencia em APIs REST, integracao com banco de dados, autenticacao e organizacao de arquitetura.',
-      tags: ['Java', 'Spring Boot', 'APIs REST', 'JPA / Hibernate', 'Spring Security'],
+      period: { pt: 'Foco principal', en: 'Main focus' },
+      title: { pt: 'Especializacao em Backend', en: 'Backend specialization' },
+      subtitle: { pt: 'Projetos, estudos praticos e evolucao tecnica', en: 'Projects, hands-on study, and technical growth' },
+      description: {
+        pt: 'Direcionando a formacao para Java e Spring Boot, com experiencia em APIs REST, integracao com banco de dados, autenticacao e organizacao de arquitetura.',
+        en: 'Directing my education toward Java and Spring Boot, with experience in REST APIs, database integration, authentication, and architectural organization.',
+      },
+      tags: {
+        pt: ['Java', 'Spring Boot', 'APIs REST', 'JPA / Hibernate', 'Spring Security'],
+        en: ['Java', 'Spring Boot', 'REST APIs', 'JPA / Hibernate', 'Spring Security'],
+      },
       side: 'right',
     },
     {
-      period: 'Complementar',
-      title: 'Base web e integracao com frontend',
-      subtitle: 'Projetos academicos e pessoais',
-      description: 'Desenvolvendo repertorio em interfaces, consumo de APIs e integracao entre frontend e backend para entregar aplicacoes completas e bem estruturadas.',
-      tags: ['Angular', 'TypeScript', 'JavaScript', 'HTML', 'CSS', 'Bootstrap', 'Tailwind CSS'],
+      period: { pt: 'Complementar', en: 'Complementary' },
+      title: { pt: 'Base web e integracao com frontend', en: 'Web foundation and frontend integration' },
+      subtitle: { pt: 'Projetos academicos e pessoais', en: 'Academic and personal projects' },
+      description: {
+        pt: 'Desenvolvendo repertorio em interfaces, consumo de APIs e integracao entre frontend e backend para entregar aplicacoes completas e bem estruturadas.',
+        en: 'Building experience with interfaces, API consumption, and frontend-backend integration to deliver complete and well-structured applications.',
+      },
+      tags: {
+        pt: ['Angular', 'TypeScript', 'JavaScript', 'HTML', 'CSS', 'Bootstrap', 'Tailwind CSS'],
+        en: ['Angular', 'TypeScript', 'JavaScript', 'HTML', 'CSS', 'Bootstrap', 'Tailwind CSS'],
+      },
       side: 'left',
     },
   ];
@@ -432,5 +465,13 @@ export class CertificationsComponent implements OnInit {
 
   t(key: string): string {
     return this.translationService.t(key);
+  }
+
+  text(value: { pt: string; en: string }): string {
+    return this.currentLang() === 'en' ? value.en : value.pt;
+  }
+
+  tags(value: { pt: string[]; en: string[] }): string[] {
+    return this.currentLang() === 'en' ? value.en : value.pt;
   }
 }

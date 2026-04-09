@@ -2,6 +2,24 @@ import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslationService } from '../../../core/services/translation.service';
 import { ScrollService } from '../../../core/services/scroll.service';
+import { HeroTechMarqueeComponent } from './hero-tech-marquee.component';
+
+interface HomeLocalizedText {
+  pt: string;
+  en: string;
+}
+
+interface AboutInfoItem {
+  icon: string;
+  value: HomeLocalizedText;
+}
+
+interface SkillCategoryItem {
+  title: HomeLocalizedText;
+  icon: string;
+  description: HomeLocalizedText;
+  items: string[];
+}
 
 /**
  * HomeComponent - Seção Hero + Sobre mim + Habilidades
@@ -10,7 +28,7 @@ import { ScrollService } from '../../../core/services/scroll.service';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, HeroTechMarqueeComponent],
   template: `
     <!-- =============================================
          SEÇÃO HERO
@@ -92,16 +110,10 @@ import { ScrollService } from '../../../core/services/scroll.service';
           <!-- Avatar / Foto de perfil placeholder -->
           <div class="order-1 lg:order-2 flex justify-center lg:justify-end reveal" style="transition-delay: 0.2s">
             <div class="relative">
-              <!-- Anel animado externo -->
-              <div class="absolute inset-0 rounded-full border-2 border-primary-500/30 animate-ping" style="animation-duration: 3s"></div>
-              <!-- Anel decorativo -->
-              <div class="absolute -inset-4 rounded-full border border-primary-500/20"></div>
-              <div class="absolute -inset-8 rounded-full border border-primary-500/10"></div>
-
               <!-- Avatar com foto -->
               <div class="relative w-[26rem] h-[26rem] sm:w-[34rem] sm:h-[34rem] rounded-full overflow-hidden
-                          border-4 border-primary-500/40 shadow-2xl animate-float"
-                   style="box-shadow: 0 0 60px rgba(5,230,150,0.2)">
+                          border-2 border-primary-500/80 shadow-2xl animate-float"
+                   style="box-shadow: 0 0 28px rgba(5,230,150,0.22)">
                 <img
                   src="assets/murilo-portfolio.jpeg"
                   alt="Foto de Murilo Wisch"
@@ -124,11 +136,13 @@ import { ScrollService } from '../../../core/services/scroll.service';
         </div>
 
         <!-- Indicador de scroll -->
-        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-bounce">
+        <div class="absolute bottom-28 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-bounce">
           <span class="text-xs text-[var(--color-text-muted)]">scroll</span>
           <span class="material-icons text-primary-500">expand_more</span>
         </div>
       </div>
+
+      <app-hero-tech-marquee class="reveal" style="transition-delay: 0.58s"></app-hero-tech-marquee>
     </section>
 
     <!-- =============================================
@@ -165,16 +179,16 @@ import { ScrollService } from '../../../core/services/scroll.service';
                 <div class="about-mini-stats reveal" style="transition-delay: 0.25s">
                   <div class="about-mini-stat">
                     <span class="material-icons">school</span>
-                    <div>
+                  <div>
                       <strong>PUC Minas</strong>
-                      <span>ADS em andamento</span>
+                      <span>{{ currentLang() === 'en' ? 'ADS in progress' : 'ADS em andamento' }}</span>
                     </div>
                   </div>
                   <div class="about-mini-stat">
                     <span class="material-icons">bolt</span>
                     <div>
                       <strong>Backend First</strong>
-                      <span>Java, Spring Boot e APIs</span>
+                      <span>{{ currentLang() === 'en' ? 'Java, Spring Boot and APIs' : 'Java, Spring Boot e APIs' }}</span>
                     </div>
                   </div>
                 </div>
@@ -184,7 +198,7 @@ import { ScrollService } from '../../../core/services/scroll.service';
                   <div *ngFor="let info of aboutInfo"
                        class="about-info-card">
                     <span class="material-icons text-primary-500 text-base">{{ info.icon }}</span>
-                    <span>{{ info.value }}</span>
+                    <span>{{ text(info.value) }}</span>
                   </div>
                 </div>
               </div>
@@ -196,15 +210,17 @@ import { ScrollService } from '../../../core/services/scroll.service';
             <div class="skills-panel">
               <div class="skills-panel-header reveal">
                 <div>
-                  <span class="skills-chip">Tecnologias em destaque</span>
+                  <span class="skills-chip">{{ currentLang() === 'en' ? 'Featured technologies' : 'Tecnologias em destaque' }}</span>
                   <h3 class="text-xl font-bold mt-3">{{ t('home.skills_title') }}</h3>
                   <p class="skills-subtitle">
-                    Minha stack organizada por especialidade, com foco principal em backend, segurança, dados e ferramentas de desenvolvimento.
+                    {{ currentLang() === 'en'
+                      ? 'My stack organized by specialty, with a main focus on backend, security, data, and development tools.'
+                      : 'Minha stack organizada por especialidade, com foco principal em backend, segurança, dados e ferramentas de desenvolvimento.' }}
                   </p>
                 </div>
                 <div class="skills-pulse">
                   <span></span>
-                  <span>STACK PRINCIPAL</span>
+                  <span>{{ currentLang() === 'en' ? 'MAIN STACK' : 'STACK PRINCIPAL' }}</span>
                 </div>
               </div>
 
@@ -213,21 +229,21 @@ import { ScrollService } from '../../../core/services/scroll.service';
                   <span class="material-icons">dns</span>
                   <div>
                     <strong>Backend</strong>
-                    <span>Java, Spring Boot, APIs REST</span>
+                    <span>{{ currentLang() === 'en' ? 'Java, Spring Boot, REST APIs' : 'Java, Spring Boot, APIs REST' }}</span>
                   </div>
                 </div>
                 <div class="skills-highlight-card">
                   <span class="material-icons">shield</span>
                   <div>
-                    <strong>Seguranca</strong>
+                    <strong>{{ currentLang() === 'en' ? 'Security' : 'Seguranca' }}</strong>
                     <span>JWT, OAuth2, Spring Security</span>
                   </div>
                 </div>
                 <div class="skills-highlight-card">
                   <span class="material-icons">storage</span>
                   <div>
-                    <strong>Dados</strong>
-                    <span>MySQL, PostgreSQL, modelagem</span>
+                    <strong>{{ currentLang() === 'en' ? 'Data' : 'Dados' }}</strong>
+                    <span>{{ currentLang() === 'en' ? 'MySQL, PostgreSQL, modeling' : 'MySQL, PostgreSQL, modelagem' }}</span>
                   </div>
                 </div>
               </div>
@@ -241,8 +257,8 @@ import { ScrollService } from '../../../core/services/scroll.service';
                       <span class="material-icons">{{ category.icon }}</span>
                     </div>
                     <div>
-                      <h4 class="skills-category-title">{{ category.title }}</h4>
-                      <p class="skills-category-description">{{ category.description }}</p>
+                      <h4 class="skills-category-title">{{ text(category.title) }}</h4>
+                      <p class="skills-category-description">{{ text(category.description) }}</p>
                     </div>
                   </div>
                   <div class="skills-category-tags">
@@ -261,53 +277,68 @@ export class HomeComponent implements OnInit {
 
   private translationService = inject(TranslationService);
   private scrollService = inject(ScrollService);
+  currentLang = this.translationService.currentLang;
 
   // ============================================
   // DADOS PESSOAIS - Substitua pelos seus!
   // ============================================
 
   stats = [
-    { value: '3º',   labelKey: 'home.stats_years' },
-    { value: '2',    labelKey: 'home.stats_projects' },
+    { value: '3',    labelKey: 'home.stats_projects' },
     { value: 'Backend',  labelKey: 'home.stats_clients' },
   ];
 
-  aboutInfo = [
-    { icon: 'person',        value: 'Murilo Wisch' },
-    { icon: 'school',        value: 'ADS | PUC Minas' },
-    { icon: 'timeline',      value: '3º período' },
-    { icon: 'code',          value: 'Java + Spring Boot' },
+  aboutInfo: AboutInfoItem[] = [
+    { icon: 'person',   value: { pt: 'Murilo Wisch', en: 'Murilo Wisch' } },
+    { icon: 'school',   value: { pt: 'ADS | PUC Minas', en: 'ADS | PUC Minas' } },
+    { icon: 'timeline', value: { pt: '3º período', en: '3rd semester' } },
+    { icon: 'code',     value: { pt: 'Java + Spring Boot', en: 'Java + Spring Boot' } },
   ];
 
-  skillCategories = [
+  skillCategories: SkillCategoryItem[] = [
     {
-      title: 'Backend',
+      title: { pt: 'Backend', en: 'Backend' },
       icon: 'dns',
-      description: 'Base principal de desenvolvimento e construccao de APIs.',
+      description: {
+        pt: 'Base principal de desenvolvimento e construcao de APIs.',
+        en: 'Main foundation for development and API construction.',
+      },
       items: ['Java', 'Spring Boot', 'APIs REST', 'JPA / Hibernate', 'MVC', 'Microservicos'],
     },
     {
-      title: 'Seguranca',
+      title: { pt: 'Seguranca', en: 'Security' },
       icon: 'shield',
-      description: 'Autenticacao, autorizacao e protecao de acesso.',
+      description: {
+        pt: 'Autenticacao, autorizacao e protecao de acesso.',
+        en: 'Authentication, authorization, and access protection.',
+      },
       items: ['Spring Security', 'OAuth2', 'JWT'],
     },
     {
-      title: 'Banco de Dados',
+      title: { pt: 'Banco de Dados', en: 'Databases' },
       icon: 'storage',
-      description: 'Persistencia, consultas e estruturacao de dados.',
+      description: {
+        pt: 'Persistencia, consultas e estruturacao de dados.',
+        en: 'Persistence, queries, and data structuring.',
+      },
       items: ['MySQL', 'PostgreSQL', 'Modelagem de dados'],
     },
     {
-      title: 'Ferramentas',
+      title: { pt: 'Ferramentas', en: 'Tools' },
       icon: 'build',
-      description: 'Fluxo de desenvolvimento, testes de API e entrega.',
+      description: {
+        pt: 'Fluxo de desenvolvimento, testes de API e entrega.',
+        en: 'Development workflow, API testing, and delivery.',
+      },
       items: ['Git', 'GitHub', 'Docker', 'CI/CD', 'Postman', 'Maven', 'Swagger'],
     },
     {
-      title: 'Web',
+      title: { pt: 'Web', en: 'Web' },
       icon: 'web',
-      description: 'Interfaces e integracao com aplicacoes frontend.',
+      description: {
+        pt: 'Interfaces e integracao com aplicacoes frontend.',
+        en: 'Interfaces and integration with frontend applications.',
+      },
       items: ['Angular', 'TypeScript', 'JavaScript', 'HTML', 'CSS', 'Bootstrap', 'Tailwind CSS', 'React Native'],
     },
   ];
@@ -319,6 +350,10 @@ export class HomeComponent implements OnInit {
 
   t(key: string): string {
     return this.translationService.t(key);
+  }
+
+  text(value: HomeLocalizedText): string {
+    return this.currentLang() === 'en' ? value.en : value.pt;
   }
 
   scrollTo(id: string): void {

@@ -3,12 +3,17 @@ import { CommonModule } from '@angular/common';
 import { TranslationService } from '../../../core/services/translation.service';
 import { ScrollService } from '../../../core/services/scroll.service';
 
+interface LocalizedText {
+  pt: string;
+  en: string;
+}
+
 // Interface de projeto - adicione seus projetos aqui
 export interface Project {
   id: number;
   title: string;
-  description: string;
-  longDescription: string;
+  description: LocalizedText;
+  longDescription: LocalizedText;
   image: string;      // URL da imagem do projeto
   tags: string[];
   category: 'frontend' | 'backend' | 'fullstack';
@@ -131,7 +136,7 @@ export interface Project {
                         from-primary-500/10 to-blue-500/10 flex items-center justify-center">
               <span *ngIf="project.primary" class="project-primary-badge">
                 <span class="material-icons text-sm">auto_awesome</span>
-                Projeto Principal
+                {{ t('projects.primary_badge') }}
               </span>
               <img
                 [src]="project.image"
@@ -173,7 +178,7 @@ export interface Project {
                 {{ project.title }}
               </h3>
               <p class="text-sm text-[var(--color-text-muted)] leading-relaxed mb-4 line-clamp-2">
-                {{ project.description }}
+                {{ localize(project.description) }}
               </p>
 
               <!-- Tags de tecnologias -->
@@ -189,7 +194,7 @@ export interface Project {
         <!-- Estado vazio quando filtro não retorna resultados -->
         <div *ngIf="filteredProjects().length === 0" class="text-center py-16">
           <span class="text-5xl mb-4 block">🔍</span>
-          <p class="text-[var(--color-text-muted)]">Nenhum projeto nesta categoria ainda.</p>
+          <p class="text-[var(--color-text-muted)]">{{ t('projects.empty_state') }}</p>
         </div>
       </div>
 
@@ -230,7 +235,7 @@ export interface Project {
           <div class="p-6">
             <h3 class="font-display text-2xl font-bold mb-3">{{ selectedProject()!.title }}</h3>
             <p class="text-[var(--color-text-muted)] leading-relaxed mb-6">
-              {{ selectedProject()!.longDescription }}
+              {{ localize(selectedProject()!.longDescription) }}
             </p>
 
             <!-- Tags -->
@@ -248,7 +253,7 @@ export interface Project {
                 class="btn-primary"
               >
                 <span class="material-icons text-base">code</span>
-                Ver no GitHub
+                {{ t('projects.modal_github') }}
               </a>
               <a
                 *ngIf="selectedProject()!.demoUrl"
@@ -258,7 +263,7 @@ export interface Project {
                 class="btn-outline"
               >
                 <span class="material-icons text-base">open_in_new</span>
-                Ver Demo ao Vivo
+                {{ t('projects.modal_demo') }}
               </a>
             </div>
           </div>
@@ -289,8 +294,14 @@ export class ProjectsComponent implements OnInit {
     {
       id: 1,
       title: 'EcoPointMap',
-      description: 'Aplicação web voltada à sustentabilidade para mapear pontos de reciclagem e facilitar o descarte correto de resíduos.',
-      longDescription: 'Aplicação web criada para disponibilizar informações sobre pontos de reciclagem e promover a sustentabilidade por meio de uma navegação simples e acessível. O projeto foi construído com JavaScript, Bootstrap e HTML, com foco em organização visual, usabilidade e incentivo ao descarte consciente.',
+      description: {
+        pt: 'Aplicacao web voltada a sustentabilidade para mapear pontos de reciclagem e facilitar o descarte correto de residuos.',
+        en: 'Web application focused on sustainability to map recycling points and make proper waste disposal easier.',
+      },
+      longDescription: {
+        pt: 'Aplicacao web criada para disponibilizar informacoes sobre pontos de reciclagem e promover a sustentabilidade por meio de uma navegacao simples e acessivel. O projeto foi construido com JavaScript, Bootstrap e HTML, com foco em organizacao visual, usabilidade e incentivo ao descarte consciente.',
+        en: 'Web application created to provide information about recycling points and promote sustainability through simple and accessible navigation. The project was built with JavaScript, Bootstrap, and HTML, focusing on visual organization, usability, and encouraging conscious disposal.',
+      },
       image: 'assets/ecopoint-project.png',
       tags: ['JavaScript', 'Bootstrap', 'HTML', 'Sustentabilidade'],
       category: 'frontend',
@@ -301,8 +312,14 @@ export class ProjectsComponent implements OnInit {
     {
       id: 2,
       title: 'WischGym',
-      description: 'Plataforma web para gestão de academias, cobrindo alunos, professores, treinos, matrículas, pagamentos e notificações em tempo real.',
-      longDescription: 'Plataforma completa construída com backend em Spring Boot 3 e frontend em Angular 17+. O projeto inclui autenticação JWT com refresh token rotativo, OAuth2 com Google One Tap, Spring Security com controle por role, upload de mídia com Cloudinary, agendamentos automáticos com @Scheduled e uma camada frontend com guards de rota, interceptors HTTP e lazy loading.',
+      description: {
+        pt: 'Plataforma web para gestao de academias, cobrindo alunos, professores, treinos, matriculas, pagamentos e notificacoes em tempo real.',
+        en: 'Web platform for gym management, covering students, trainers, workouts, enrollments, payments, and real-time notifications.',
+      },
+      longDescription: {
+        pt: 'Plataforma completa construida com backend em Spring Boot 3 e frontend em Angular 17+. O projeto inclui autenticacao JWT com refresh token rotativo, OAuth2 com Google One Tap, Spring Security com controle por role, upload de midia com Cloudinary, agendamentos automaticos com @Scheduled e uma camada frontend com guards de rota, interceptors HTTP e lazy loading.',
+        en: 'Complete platform built with a Spring Boot 3 backend and Angular 17+ frontend. The project includes JWT authentication with rotating refresh tokens, OAuth2 with Google One Tap, role-based access using Spring Security, media upload with Cloudinary, automated scheduling with @Scheduled, and a frontend layer with route guards, HTTP interceptors, and lazy loading.',
+      },
       image: 'assets/wischgym-project.png',
       tags: ['Java', 'Spring Boot', 'Angular', 'TypeScript', 'JWT', 'OAuth2', 'MySQL', 'Cloudinary'],
       category: 'fullstack',
@@ -314,8 +331,14 @@ export class ProjectsComponent implements OnInit {
     {
       id: 3,
       title: 'Cuidar+',
-      description: 'Sistema para gerenciamento de medicamentos voltado a idosos em situação de polifarmácia, cuidadores e familiares.',
-      longDescription: 'Projeto desenvolvido com C# e ASP.NET para organizar e acompanhar prescrições, reduzir falhas terapêuticas relacionadas a esquecimento ou administração inadequada, identificar possíveis interações medicamentosas e oferecer suporte mais seguro a cuidadores e familiares. A proposta busca melhorar a adesão ao tratamento com acompanhamento e lembretes, contribuindo para mais segurança e qualidade de vida ao público idoso.',
+      description: {
+        pt: 'Sistema para gerenciamento de medicamentos voltado a idosos em situacao de polifarmacia, cuidadores e familiares.',
+        en: 'Medication management system focused on elderly people in polypharmacy situations, as well as caregivers and family members.',
+      },
+      longDescription: {
+        pt: 'Projeto desenvolvido com C# e ASP.NET para organizar e acompanhar prescricoes, reduzir falhas terapeuticas relacionadas a esquecimento ou administracao inadequada, identificar possiveis interacoes medicamentosas e oferecer suporte mais seguro a cuidadores e familiares. A proposta busca melhorar a adesao ao tratamento com acompanhamento e lembretes, contribuindo para mais seguranca e qualidade de vida ao publico idoso.',
+        en: 'Project developed with C# and ASP.NET to organize and monitor prescriptions, reduce therapeutic failures related to forgetting or incorrect administration, identify possible drug interactions, and offer safer support for caregivers and family members. The proposal aims to improve treatment adherence through monitoring and reminders, contributing to better safety and quality of life for elderly users.',
+      },
       image: 'assets/cuidar-project.png',
       tags: ['C#', 'ASP.NET', 'Gestão de medicamentos', 'Saúde', 'Polifarmácia'],
       category: 'backend',
@@ -334,6 +357,10 @@ export class ProjectsComponent implements OnInit {
 
   t(key: string): string {
     return this.translationService.t(key);
+  }
+
+  localize(text: LocalizedText): string {
+    return this.translationService.currentLang() === 'en' ? text.en : text.pt;
   }
 
   setFilter(category: string): void {

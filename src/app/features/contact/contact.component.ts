@@ -4,10 +4,24 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { TranslationService } from '../../../core/services/translation.service';
 import { ScrollService } from '../../../core/services/scroll.service';
 
+interface ContactInfoItem {
+  icon: string;
+  labelKey: string;
+  value?: string;
+  valueKey?: string;
+  href?: string;
+  external?: boolean;
+}
+
+interface SocialItem {
+  icon: string;
+  labelKey: string;
+  url: string;
+}
+
 /**
  * ContactComponent - Formulário de contato visual + links sociais
- * O formulário é visual (sem backend). Para conectar a um serviço,
- * veja o método onSubmit() e integre com Formspree, EmailJS ou similar.
+ * O formulário abre o cliente de e-mail do usuário com os dados preenchidos.
  */
 @Component({
   selector: 'app-contact',
@@ -56,7 +70,7 @@ import { ScrollService } from '../../../core/services/scroll.service';
                   >
                   <p *ngIf="nameField.invalid && nameField.touched"
                      class="text-red-500 text-xs mt-1">
-                    Nome é obrigatório (mínimo 2 caracteres)
+                    {{ t('contact.name_error') }}
                   </p>
                 </div>
 
@@ -77,7 +91,7 @@ import { ScrollService } from '../../../core/services/scroll.service';
                   >
                   <p *ngIf="emailField.invalid && emailField.touched"
                      class="text-red-500 text-xs mt-1">
-                    E-mail válido é obrigatório
+                    {{ t('contact.email_error') }}
                   </p>
                 </div>
               </div>
@@ -117,21 +131,24 @@ import { ScrollService } from '../../../core/services/scroll.service';
                 ></textarea>
                 <p *ngIf="messageField.invalid && messageField.touched"
                    class="text-red-500 text-xs mt-1">
-                  Mensagem obrigatória (mínimo 20 caracteres)
+                  {{ t('contact.message_error') }}
                 </p>
               </div>
+
+              <p class="text-sm text-[var(--color-text-muted)]">
+                {{ t('contact.form_hint') }}
+              </p>
 
               <!-- Botão de envio -->
               <button
                 type="submit"
                 class="btn-primary w-full justify-center py-4"
-                [disabled]="isLoading() || contactForm.invalid"
-                [class.opacity-70]="isLoading() || contactForm.invalid"
-                [class.cursor-not-allowed]="isLoading() || contactForm.invalid"
+                [disabled]="contactForm.invalid"
+                [class.opacity-70]="contactForm.invalid"
+                [class.cursor-not-allowed]="contactForm.invalid"
               >
-                <span *ngIf="!isLoading()" class="material-icons text-base">send</span>
-                <span *ngIf="isLoading()" class="material-icons text-base animate-spin">autorenew</span>
-                {{ isLoading() ? t('contact.sending') : t('contact.send') }}
+                <span class="material-icons text-base">send</span>
+                {{ t('contact.send') }}
               </button>
 
               <!-- Feedback de sucesso -->
@@ -165,9 +182,9 @@ import { ScrollService } from '../../../core/services/scroll.service';
               <div class="flex items-start gap-3">
                 <span class="text-2xl">👋</span>
                 <div>
-                  <h3 class="font-bold mb-1">Vamos conversar!</h3>
+                  <h3 class="font-bold mb-1">{{ t('contact.note_title') }}</h3>
                   <p class="text-sm text-[var(--color-text-muted)] leading-relaxed">
-                    Estou em busca da minha primeira oportunidade na área de tecnologia e aberto para falar sobre estágio, projetos e conexões profissionais.
+                    {{ t('contact.note_body') }}
                   </p>
                 </div>
               </div>
@@ -175,27 +192,45 @@ import { ScrollService } from '../../../core/services/scroll.service';
 
             <!-- Cards de informações de contato -->
             <div class="space-y-3">
-              <a
-                *ngFor="let info of contactInfo"
-                [href]="info.href"
-                [target]="info.external ? '_blank' : '_self'"
-                rel="noopener noreferrer"
-                class="flex items-center gap-4 p-4 rounded-2xl border border-[var(--color-border)]
-                       hover:border-primary-500/50 hover:bg-primary-500/5 transition-all duration-200 group"
-              >
-                <div class="w-10 h-10 flex items-center justify-center rounded-xl
-                            bg-primary-500/10 group-hover:bg-primary-500/20 transition-colors flex-shrink-0">
-                  <span class="material-icons text-primary-500">{{ info.icon }}</span>
-                </div>
-                <div>
-                  <p class="text-xs text-[var(--color-text-muted)]">{{ info.label }}</p>
-                  <p class="text-sm font-medium">{{ info.value }}</p>
-                </div>
-                <span class="material-icons text-[var(--color-text-muted)] text-sm ml-auto
-                             group-hover:text-primary-500 transition-colors">
-                  arrow_forward
-                </span>
-              </a>
+              <ng-container *ngFor="let info of contactInfo">
+                <a
+                  *ngIf="info.href; else staticInfoCard"
+                  [href]="info.href"
+                  [target]="info.external ? '_blank' : '_self'"
+                  rel="noopener noreferrer"
+                  class="flex items-center gap-4 p-4 rounded-2xl border border-[var(--color-border)]
+                         hover:border-primary-500/50 hover:bg-primary-500/5 transition-all duration-200 group"
+                >
+                  <div class="w-10 h-10 flex items-center justify-center rounded-xl
+                              bg-primary-500/10 group-hover:bg-primary-500/20 transition-colors flex-shrink-0">
+                    <span class="material-icons text-primary-500">{{ info.icon }}</span>
+                  </div>
+                  <div>
+                    <p class="text-xs text-[var(--color-text-muted)]">{{ t(info.labelKey) }}</p>
+                    <p class="text-sm font-medium">{{ info.valueKey ? t(info.valueKey) : info.value }}</p>
+                  </div>
+                  <span class="material-icons text-[var(--color-text-muted)] text-sm ml-auto
+                               group-hover:text-primary-500 transition-colors">
+                    arrow_forward
+                  </span>
+                </a>
+
+                <ng-template #staticInfoCard>
+                  <div
+                    class="flex items-center gap-4 p-4 rounded-2xl border border-[var(--color-border)]
+                           bg-[var(--color-card)]"
+                  >
+                    <div class="w-10 h-10 flex items-center justify-center rounded-xl
+                                bg-primary-500/10 transition-colors flex-shrink-0">
+                      <span class="material-icons text-primary-500">{{ info.icon }}</span>
+                    </div>
+                    <div>
+                      <p class="text-xs text-[var(--color-text-muted)]">{{ t(info.labelKey) }}</p>
+                      <p class="text-sm font-medium">{{ info.valueKey ? t(info.valueKey) : info.value }}</p>
+                    </div>
+                  </div>
+                </ng-template>
+              </ng-container>
             </div>
 
             <!-- Divisor -->
@@ -215,13 +250,13 @@ import { ScrollService } from '../../../core/services/scroll.service';
                 class="flex-1 flex flex-col items-center gap-1.5 p-3 rounded-xl
                        border border-[var(--color-border)] hover:border-primary-500/50
                        hover:bg-primary-500/5 transition-all duration-200 group"
-                [title]="social.label"
+                [title]="t(social.labelKey)"
               >
                 <span class="material-icons text-xl text-[var(--color-text-muted)]
                              group-hover:text-primary-500 transition-colors">
                   {{ social.icon }}
                 </span>
-                <span class="text-xs text-[var(--color-text-muted)]">{{ social.label }}</span>
+                <span class="text-xs text-[var(--color-text-muted)]">{{ t(social.labelKey) }}</span>
               </a>
             </div>
           </div>
@@ -235,7 +270,6 @@ export class ContactComponent implements OnInit {
   private translationService = inject(TranslationService);
   private scrollService = inject(ScrollService);
 
-  isLoading = signal(false);
   submitStatus = signal<'idle' | 'success' | 'error'>('idle');
 
   formData = {
@@ -248,34 +282,32 @@ export class ContactComponent implements OnInit {
   // =============================================
   // INFORMAÇÕES DE CONTATO - Substitua pelos seus!
   // =============================================
-  contactInfo = [
+  contactInfo: ContactInfoItem[] = [
     {
       icon: 'alternate_email',
-      label: 'E-mail direto',
+      labelKey: 'contact.email_direct',
       value: 'murilowisch.dev@gmail.com',
       href: 'mailto:murilowisch.dev@gmail.com',
       external: false,
     },
     {
       icon: 'code',
-      label: 'GitHub',
+      labelKey: 'contact.github_label',
       value: 'github.com/MuriloWisch',
       href: 'https://github.com/MuriloWisch',
       external: true,
     },
     {
       icon: 'schedule',
-      label: 'Tempo de resposta',
-      value: 'Até 24 horas',
-      href: '#',
-      external: false,
+      labelKey: 'contact.response_time',
+      valueKey: 'contact.response_time_value',
     },
   ];
 
-  socials = [
-    { icon: 'code',   label: 'GitHub',   url: 'https://github.com/MuriloWisch' },
-    { icon: 'work',   label: 'LinkedIn', url: 'https://www.linkedin.com/in/murilowisch/?skipRedirect=true' },
-    { icon: 'mail',   label: 'E-mail',   url: 'mailto:murilowisch.dev@gmail.com' },
+  socials: SocialItem[] = [
+    { icon: 'code',   labelKey: 'contact.github_label',   url: 'https://github.com/MuriloWisch' },
+    { icon: 'work',   labelKey: 'contact.linkedin_label', url: 'https://www.linkedin.com/in/murilowisch/?skipRedirect=true' },
+    { icon: 'mail',   labelKey: 'contact.email_direct',   url: 'mailto:murilowisch.dev@gmail.com' },
   ];
 
   ngOnInit(): void {
@@ -286,38 +318,27 @@ export class ContactComponent implements OnInit {
     return this.translationService.t(key);
   }
 
-  /**
-   * Manipula o envio do formulário
-   *
-   * Para integrar com um serviço real, substitua o setTimeout abaixo por:
-   *
-   * OPÇÃO 1 - Formspree (gratuito):
-   *   fetch('https://formspree.io/f/SEU_ID', {
-   *     method: 'POST',
-   *     headers: { 'Content-Type': 'application/json' },
-   *     body: JSON.stringify(this.formData)
-   *   })
-   *
-   * OPÇÃO 2 - EmailJS (gratuito):
-   *   emailjs.send('SERVICE_ID', 'TEMPLATE_ID', this.formData, 'PUBLIC_KEY')
-   */
   async onSubmit(form: NgForm): Promise<void> {
     if (form.invalid) return;
-
-    this.isLoading.set(true);
     this.submitStatus.set('idle');
 
     try {
-      // Simula envio (substitua por integração real)
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      const mailSubject = encodeURIComponent(this.formData.subject);
+      const mailBody = encodeURIComponent(
+        `${this.t('contact.name_label')}: ${this.formData.name}\n` +
+        `${this.t('contact.email_label')}: ${this.formData.email}\n\n` +
+        `${this.t('contact.message_label')}:\n${this.formData.message}`
+      );
+
+      if (typeof window !== 'undefined') {
+        window.location.href = `mailto:murilowisch.dev@gmail.com?subject=${mailSubject}&body=${mailBody}`;
+      }
 
       this.submitStatus.set('success');
       form.resetForm();
       this.formData = { name: '', email: '', subject: '', message: '' };
     } catch {
       this.submitStatus.set('error');
-    } finally {
-      this.isLoading.set(false);
     }
   }
 }
