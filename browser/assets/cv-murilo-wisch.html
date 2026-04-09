@@ -1,0 +1,346 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Resume | Murilo Wisch</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #eef4f7;
+      --surface: #ffffff;
+      --ink: #102133;
+      --muted: #5e7083;
+      --accent: #05e696;
+      --accent-strong: #00b878;
+      --line: #d8e4ec;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: linear-gradient(180deg, #edf6f3, var(--bg));
+      color: var(--ink);
+      line-height: 1.5;
+    }
+
+    .page {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 32px 20px 56px;
+    }
+
+    .toolbar {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .toolbar a,
+    .toolbar button {
+      border: 0;
+      border-radius: 999px;
+      padding: 10px 16px;
+      background: var(--ink);
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .toolbar .secondary {
+      background: var(--accent);
+      color: #032316;
+    }
+
+    .cv {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 24px 60px rgba(16, 33, 51, 0.12);
+    }
+
+    .hero {
+      padding: 36px;
+      background: linear-gradient(135deg, #0f1d2c, #12334a 62%, #0b5f49);
+      color: #f8fffd;
+    }
+
+    .hero h1 {
+      margin: 0;
+      font-size: 40px;
+      line-height: 1.1;
+    }
+
+    .hero p {
+      margin: 10px 0 0;
+      max-width: 680px;
+      color: rgba(248, 255, 253, 0.82);
+      font-size: 17px;
+    }
+
+    .contact-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px 22px;
+      margin-top: 22px;
+      font-size: 14px;
+    }
+
+    .contact-row a {
+      color: #bdfde6;
+      text-decoration: none;
+    }
+
+    .content {
+      display: grid;
+      grid-template-columns: 1.3fr 0.9fr;
+      gap: 0;
+    }
+
+    .main,
+    .side {
+      padding: 28px 32px 32px;
+    }
+
+    .side {
+      border-left: 1px solid var(--line);
+      background: #fbfdff;
+    }
+
+    .section + .section {
+      margin-top: 28px;
+    }
+
+    .section h2 {
+      margin: 0 0 12px;
+      font-size: 13px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent-strong);
+    }
+
+    .section p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .item + .item {
+      margin-top: 18px;
+      padding-top: 18px;
+      border-top: 1px solid var(--line);
+    }
+
+    .item h3 {
+      margin: 0;
+      font-size: 18px;
+      color: var(--ink);
+    }
+
+    .item .sub {
+      margin: 4px 0 8px;
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .bullets {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .bullets li + li {
+      margin-top: 6px;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .tag {
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(5, 230, 150, 0.12);
+      color: #086646;
+      border: 1px solid rgba(5, 230, 150, 0.22);
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .small-list {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .small-list li + li {
+      margin-top: 8px;
+    }
+
+    @media (max-width: 820px) {
+      .content {
+        grid-template-columns: 1fr;
+      }
+
+      .side {
+        border-left: 0;
+        border-top: 1px solid var(--line);
+      }
+
+      .hero,
+      .main,
+      .side {
+        padding: 24px;
+      }
+
+      .hero h1 {
+        font-size: 32px;
+      }
+    }
+
+    @media print {
+      body {
+        background: #fff;
+      }
+
+      .page {
+        max-width: none;
+        padding: 0;
+      }
+
+      .toolbar {
+        display: none;
+      }
+
+      .cv {
+        border: 0;
+        border-radius: 0;
+        box-shadow: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="toolbar">
+      <a href="mailto:murilowisch.dev@gmail.com" class="secondary">Contact</a>
+      <button type="button" onclick="window.print()">Print / Save as PDF</button>
+    </div>
+
+    <article class="cv">
+      <header class="hero">
+        <h1>Murilo Wisch</h1>
+        <p>Backend-focused developer in progress, with emphasis on Java, Spring Boot, REST APIs, security, databases, and scalable solutions.</p>
+        <div class="contact-row">
+          <span>E-mail: <a href="mailto:murilowisch.dev@gmail.com">murilowisch.dev@gmail.com</a></span>
+          <span>GitHub: <a href="https://github.com/MuriloWisch">github.com/MuriloWisch</a></span>
+          <span>LinkedIn: <a href="https://www.linkedin.com/in/murilowisch/">linkedin.com/in/murilowisch</a></span>
+        </div>
+      </header>
+
+      <div class="content">
+        <main class="main">
+          <section class="section">
+            <h2>Professional Summary</h2>
+            <p>Analysis and Systems Development student at PUC Minas, currently in the 3rd semester, focused on backend development with Java and Spring Boot. I have experience building REST APIs, integrating databases, using Git for version control, and developing projects with attention to organization, security, and technical growth.</p>
+          </section>
+
+          <section class="section">
+            <h2>Highlighted Projects</h2>
+
+            <div class="item">
+              <h3>WischGym</h3>
+              <p class="sub">Web platform for gym management</p>
+              <ul class="bullets">
+                <li>Spring Boot 3 backend and Angular 17+ frontend.</li>
+                <li>JWT authentication with rotating refresh tokens, Google One Tap OAuth2, and role-based access with Spring Security.</li>
+                <li>Integration with MySQL, Cloudinary, route guards, HTTP interceptors, and scheduled jobs with @Scheduled.</li>
+              </ul>
+            </div>
+
+            <div class="item">
+              <h3>Cuidar+</h3>
+              <p class="sub">Medication management system for elderly users, caregivers, and family members</p>
+              <ul class="bullets">
+                <li>Developed with C# and ASP.NET to support prescription control and treatment adherence.</li>
+                <li>Focused on therapeutic safety, reminders, and reducing failures related to incorrect medication use.</li>
+              </ul>
+            </div>
+
+            <div class="item">
+              <h3>EcoPointMap</h3>
+              <p class="sub">Web application focused on sustainability</p>
+              <ul class="bullets">
+                <li>Project created to map recycling points and make proper waste disposal easier.</li>
+                <li>Built with JavaScript, Bootstrap, and HTML, focusing on visual organization and usability.</li>
+              </ul>
+            </div>
+          </section>
+
+          <section class="section">
+            <h2>Education</h2>
+            <div class="item">
+              <h3>Analysis and Systems Development</h3>
+              <p class="sub">PUC Minas · 3rd semester</p>
+              <p>Hands-on experience in building real solutions, teamwork, software development, databases, and technologies such as C# and React Native through academic projects and activities.</p>
+            </div>
+          </section>
+        </main>
+
+        <aside class="side">
+          <section class="section">
+            <h2>Goal</h2>
+            <p>To secure my first opportunity in technology, with a main focus on backend development.</p>
+          </section>
+
+          <section class="section">
+            <h2>Hard Skills</h2>
+            <div class="tags">
+              <span class="tag">Java</span>
+              <span class="tag">Spring Boot</span>
+              <span class="tag">APIs REST</span>
+              <span class="tag">Spring Security</span>
+              <span class="tag">JPA / Hibernate</span>
+              <span class="tag">OAuth2</span>
+              <span class="tag">JWT</span>
+              <span class="tag">Microserviços</span>
+              <span class="tag">MySQL</span>
+              <span class="tag">PostgreSQL</span>
+              <span class="tag">Docker</span>
+              <span class="tag">Git</span>
+              <span class="tag">GitHub</span>
+              <span class="tag">CI/CD</span>
+              <span class="tag">Maven</span>
+              <span class="tag">Swagger</span>
+              <span class="tag">Angular</span>
+              <span class="tag">TypeScript</span>
+              <span class="tag">JavaScript</span>
+            </div>
+          </section>
+
+          <section class="section">
+            <h2>Profile</h2>
+            <ul class="small-list">
+              <li>Strong interest in REST APIs, security, databases, and scalable solutions.</li>
+              <li>Passionate about technology, software development, and continuous learning.</li>
+              <li>Discipline, consistency, and continuous growth as the foundation of my professional routine.</li>
+            </ul>
+          </section>
+        </aside>
+      </div>
+    </article>
+  </div>
+</body>
+</html>

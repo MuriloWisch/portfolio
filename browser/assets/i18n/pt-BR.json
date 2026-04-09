@@ -1,0 +1,90 @@
+{
+  "nav": {
+    "home": "Início",
+    "projects": "Projetos",
+    "certifications": "Formação",
+    "contact": "Contato",
+    "download_cv": "Ver CV"
+  },
+  "home": {
+    "greeting": "Olá, eu sou",
+    "name": "Murilo Wisch",
+    "title": "Estudante de ADS com foco em Backend",
+    "subtitle": "Buscando a primeira oportunidade na área de tecnologia, com foco principal em desenvolvimento backend com Java e Spring Boot, APIs REST, segurança, bancos de dados e soluções escaláveis.",
+    "cta_projects": "Ver Projetos",
+    "cta_contact": "Entrar em Contato",
+    "available": "Disponível para oportunidades",
+    "stats_years": "período atual",
+    "stats_projects": "projetos principais",
+    "stats_clients": "foco principal",
+    "skills_title": "Tecnologias que utilizo",
+    "about_title": "Sobre mim",
+    "about_p1": "Sou estudante de Análise e Desenvolvimento de Sistemas na PUC Minas, atualmente no 3º período, com foco em desenvolvimento backend utilizando Java e Spring Boot. Tenho experiência na construção de APIs REST, integração com bancos de dados e versionamento com Git.",
+    "about_p2": "Sou apaixonado por tecnologia, desenvolvimento de software e desafios que geram aprendizado constante. Fora do código, treino na academia diariamente, gosto de videogames e valorizo disciplina, consistência e evolução por meio de pequenas ações contínuas.",
+    "location": "PUC Minas | 3º período"
+  },
+  "projects": {
+    "title": "Projetos",
+    "subtitle": "Uma seleção dos meus trabalhos mais relevantes",
+    "view_github": "GitHub",
+    "view_demo": "Demo",
+    "primary_badge": "Projeto Principal",
+    "empty_state": "Nenhum projeto nesta categoria ainda.",
+    "modal_github": "Ver no GitHub",
+    "modal_demo": "Ver Demo ao Vivo",
+    "filter_all": "Todos",
+    "filter_frontend": "Frontend",
+    "filter_backend": "Backend",
+    "filter_fullstack": "Full-Stack"
+  },
+  "certifications": {
+    "title": "Formação e Evolução",
+    "subtitle": "Minha base acadêmica e os focos técnicos que venho desenvolvendo na jornada para a primeira oportunidade em tecnologia",
+    "issued_by": "Emitido por",
+    "view_credential": "Ver Credencial",
+    "year": "Ano"
+  },
+  "contact": {
+    "title": "Contato",
+    "subtitle": "Estou em busca da minha primeira oportunidade na área e aberto para conversar sobre estágio, projetos e conexões profissionais",
+    "note_title": "Vamos conversar!",
+    "note_body": "Se quiser falar sobre estágio, projetos, colaboração ou oportunidades na área, posso receber sua mensagem por e-mail.",
+    "name_label": "Nome",
+    "name_placeholder": "Seu nome completo",
+    "name_error": "Nome é obrigatório (mínimo 2 caracteres)",
+    "email_label": "E-mail",
+    "email_placeholder": "seu@email.com",
+    "email_error": "E-mail válido é obrigatório",
+    "subject_label": "Assunto",
+    "subject_placeholder": "Sobre o que você quer falar?",
+    "message_label": "Mensagem",
+    "message_placeholder": "Descreva seu projeto ou dúvida...",
+    "message_error": "Mensagem obrigatória (mínimo 20 caracteres)",
+    "form_hint": "Ao enviar, seu aplicativo de e-mail será aberto com a mensagem preenchida.",
+    "send": "Enviar por E-mail",
+    "sending": "Abrindo e-mail...",
+    "success": "Rascunho de e-mail aberto. Agora é só revisar e enviar.",
+    "error": "Ocorreu um erro. Tente novamente.",
+    "or_find_me": "Ou me encontre em",
+    "email_direct": "E-mail direto",
+    "github_label": "GitHub",
+    "linkedin_label": "LinkedIn",
+    "location": "GitHub",
+    "response_time": "Tempo de resposta",
+    "response_time_value": "Menos de 24h"
+  },
+  "footer": {
+    "made_with": "Feito com",
+    "and": "e",
+    "by": "por",
+    "rights": "Todos os direitos reservados.",
+    "back_to_top": "Voltar ao topo"
+  },
+  "theme": {
+    "light": "Modo Claro",
+    "dark": "Modo Escuro"
+  },
+  "lang": {
+    "switch_to": "Switch to English"
+  }
+}
