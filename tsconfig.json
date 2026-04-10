@@ -1,12 +1,7 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": "./",
     "rootDir": "./src",
-    "ignoreDeprecations": "6.0",
-    "paths": {
-      "@core/*": ["src/app/core/*"]
-    },
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
     "strict": true,
