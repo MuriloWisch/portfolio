@@ -282,10 +282,11 @@ export class HeaderComponent implements OnInit {
   /** Detecta qual seção está visível para destacar o link ativo */
   private detectActiveSection(): void {
     const sections = ['home', 'projects', 'certifications', 'contact'];
+    const currentPosition = window.scrollY + this.scrollService.getScrollOffset() + 24;
 
     for (const id of [...sections].reverse()) {
       const el = document.getElementById(id);
-      if (el && window.scrollY >= el.offsetTop - 120) {
+      if (el && currentPosition >= el.offsetTop) {
         this.activeSection = id;
         break;
       }

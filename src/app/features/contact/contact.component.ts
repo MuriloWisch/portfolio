@@ -19,10 +19,7 @@ interface SocialItem {
   url: string;
 }
 
-/**
- * ContactComponent - Formulário de contato visual + links sociais
- * O formulário abre o cliente de e-mail do usuário com os dados preenchidos.
- */
+
 @Component({
   selector: 'app-contact',
   standalone: true,
@@ -31,7 +28,6 @@ interface SocialItem {
     <section id="contact" class="py-20">
       <div class="section-container">
 
-        <!-- Header da seção -->
         <div class="mb-12">
           <p class="font-mono text-primary-500 text-sm mb-2 reveal">// {{ t('contact.title') }}</p>
           <h2 class="section-title mb-4 reveal" style="transition-delay: 0.1s">
@@ -44,14 +40,12 @@ interface SocialItem {
 
         <div class="grid lg:grid-cols-5 gap-12">
 
-          <!-- Formulário de contato (3/5 da largura) -->
           <div class="lg:col-span-3 reveal" style="transition-delay: 0.3s">
             <form
               #contactForm="ngForm"
               (ngSubmit)="onSubmit(contactForm)"
               class="space-y-5"
             >
-              <!-- Nome + Email -->
               <div class="grid sm:grid-cols-2 gap-4">
                 <div>
                   <label class="block text-sm font-medium mb-1.5">
@@ -96,7 +90,6 @@ interface SocialItem {
                 </div>
               </div>
 
-              <!-- Assunto -->
               <div>
                 <label class="block text-sm font-medium mb-1.5">
                   {{ t('contact.subject_label') }} <span class="text-primary-500">*</span>
@@ -113,7 +106,6 @@ interface SocialItem {
                 >
               </div>
 
-              <!-- Mensagem -->
               <div>
                 <label class="block text-sm font-medium mb-1.5">
                   {{ t('contact.message_label') }} <span class="text-primary-500">*</span>
@@ -139,7 +131,6 @@ interface SocialItem {
                 {{ t('contact.form_hint') }}
               </p>
 
-              <!-- Botão de envio -->
               <button
                 type="submit"
                 class="btn-primary w-full justify-center py-4"
@@ -151,7 +142,6 @@ interface SocialItem {
                 {{ t('contact.send') }}
               </button>
 
-              <!-- Feedback de sucesso -->
               <div
                 *ngIf="submitStatus() === 'success'"
                 class="flex items-center gap-3 p-4 bg-primary-500/10 border border-primary-500/30
@@ -161,7 +151,6 @@ interface SocialItem {
                 <p class="text-sm">{{ t('contact.success') }}</p>
               </div>
 
-              <!-- Feedback de erro -->
               <div
                 *ngIf="submitStatus() === 'error'"
                 class="flex items-center gap-3 p-4 bg-red-500/10 border border-red-500/30
@@ -173,10 +162,8 @@ interface SocialItem {
             </form>
           </div>
 
-          <!-- Informações de contato (2/5 da largura) -->
           <div class="lg:col-span-2 space-y-6 reveal" style="transition-delay: 0.4s">
 
-            <!-- Dica amigável -->
             <div class="p-5 rounded-2xl bg-gradient-to-br from-primary-500/10 to-blue-500/5
                         border border-primary-500/20">
               <div class="flex items-start gap-3">
@@ -190,7 +177,6 @@ interface SocialItem {
               </div>
             </div>
 
-            <!-- Cards de informações de contato -->
             <div class="space-y-3">
               <ng-container *ngFor="let info of contactInfo">
                 <a
@@ -233,14 +219,12 @@ interface SocialItem {
               </ng-container>
             </div>
 
-            <!-- Divisor -->
             <div class="flex items-center gap-3">
               <div class="flex-1 h-px bg-[var(--color-border)]"></div>
               <span class="text-xs text-[var(--color-text-muted)]">{{ t('contact.or_find_me') }}</span>
               <div class="flex-1 h-px bg-[var(--color-border)]"></div>
             </div>
 
-            <!-- Redes sociais (ícones grandes) -->
             <div class="flex gap-3">
               <a
                 *ngFor="let social of socials"
@@ -279,9 +263,7 @@ export class ContactComponent implements OnInit {
     message: '',
   };
 
-  // =============================================
-  // INFORMAÇÕES DE CONTATO - Substitua pelos seus!
-  // =============================================
+
   contactInfo: ContactInfoItem[] = [
     {
       icon: 'alternate_email',

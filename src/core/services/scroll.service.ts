@@ -14,7 +14,16 @@ export class ScrollService {
     if (!this.isBrowser) return;
 
     const element = document.getElementById(sectionId);
-    element?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (!element) return;
+
+    const target = this.getSectionTarget(element);
+    const offset = this.getScrollOffset();
+    const top = target.getBoundingClientRect().top + window.scrollY - offset;
+
+    window.scrollTo({
+      top: Math.max(top, 0),
+      behavior: 'smooth',
+    });
   }
 
   scrollToTop(): void {
@@ -39,5 +48,22 @@ export class ScrollService {
 
     const elements = document.querySelectorAll('.reveal, .reveal-left');
     elements.forEach((el) => observer.observe(el));
+  }
+
+  getScrollOffset(): number {
+    if (!this.isBrowser) return 0;
+
+    const navHeight = getComputedStyle(document.documentElement)
+      .getPropertyValue('--nav-height')
+      .trim();
+    const parsedNavHeight = Number.parseFloat(navHeight);
+
+    return (Number.isFinite(parsedNavHeight) ? parsedNavHeight : 72) + 8;
+  }
+
+  private getSectionTarget(section: HTMLElement): HTMLElement {
+    if (section.id === 'home') return section;
+
+    return section.querySelector<HTMLElement>('.section-title') ?? section;
   }
 }

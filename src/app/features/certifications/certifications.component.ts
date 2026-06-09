@@ -28,7 +28,7 @@ interface JourneyStat {
       background:
         radial-gradient(circle at 15% 20%, rgba(5, 230, 150, 0.08), transparent 24%),
         radial-gradient(circle at 85% 30%, rgba(0, 201, 255, 0.08), transparent 24%),
-        linear-gradient(180deg, rgba(9, 15, 30, 0.92), rgba(13, 20, 36, 0.98));
+        linear-gradient(180deg, color-mix(in srgb, var(--color-surface) 92%, var(--color-card) 8%), var(--color-surface));
     }
 
     .journey-section::before,
@@ -63,11 +63,11 @@ interface JourneyStat {
       position: relative;
       overflow: hidden;
       border-radius: 28px;
-      border: 1px solid rgba(5, 230, 150, 0.14);
+      border: 1px solid color-mix(in srgb, var(--color-border) 74%, var(--color-primary) 26%);
       background:
-        linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01)),
-        rgba(15, 23, 42, 0.58);
-      box-shadow: 0 30px 80px rgba(2, 8, 23, 0.28);
+        linear-gradient(180deg, color-mix(in srgb, var(--color-card) 96%, white 4%), color-mix(in srgb, var(--color-card) 92%, var(--color-surface) 8%)),
+        var(--color-card);
+      box-shadow: 0 30px 80px color-mix(in srgb, var(--color-text) 12%, transparent);
       backdrop-filter: blur(18px);
       animation: journeyPanelFloat 6s ease-in-out infinite;
     }
@@ -94,7 +94,7 @@ interface JourneyStat {
       border-radius: 999px;
       border: 1px solid rgba(5, 230, 150, 0.22);
       background: rgba(5, 230, 150, 0.08);
-      color: #b6ffe4;
+      color: color-mix(in srgb, var(--color-primary) 72%, var(--color-text) 28%);
       font-size: 0.74rem;
       font-weight: 700;
       letter-spacing: 0.06em;
@@ -112,21 +112,21 @@ interface JourneyStat {
     .journey-stat {
       padding: 1rem;
       border-radius: 18px;
-      border: 1px solid rgba(5, 230, 150, 0.12);
-      background: rgba(5, 230, 150, 0.05);
+      border: 1px solid color-mix(in srgb, var(--color-border) 78%, var(--color-primary) 22%);
+      background: color-mix(in srgb, var(--color-primary) 8%, var(--color-card) 92%);
     }
 
     .journey-stat strong {
       display: block;
       font-size: 1.2rem;
-      color: #ffffff;
+      color: var(--color-text);
       font-weight: 800;
     }
 
     .journey-stat span {
       display: block;
       margin-top: 0.25rem;
-      color: #94a3b8;
+      color: var(--color-text-muted);
       font-size: 0.78rem;
     }
 
@@ -167,8 +167,8 @@ interface JourneyStat {
       margin-bottom: 1.1rem;
       padding: 1rem 1rem 1rem 1.2rem;
       border-radius: 20px;
-      border: 1px solid rgba(148, 163, 184, 0.12);
-      background: rgba(15, 23, 42, 0.52);
+      border: 1px solid color-mix(in srgb, var(--color-border) 86%, var(--color-primary) 14%);
+      background: color-mix(in srgb, var(--color-card) 92%, var(--color-surface) 8%);
       transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
     }
 
@@ -209,30 +209,30 @@ interface JourneyStat {
       display: inline-flex;
       padding: 0.25rem 0.6rem;
       border-radius: 999px;
-      background: rgba(0, 201, 255, 0.08);
+      background: color-mix(in srgb, #00c9ff 10%, var(--color-card) 90%);
       border: 1px solid rgba(0, 201, 255, 0.16);
-      color: #67e8f9;
+      color: color-mix(in srgb, #00a3cc 72%, var(--color-text) 28%);
       font-size: 0.72rem;
       font-family: 'JetBrains Mono', monospace;
       margin-bottom: 0.75rem;
     }
 
     .journey-item h3 {
-      color: #f8fafc;
+      color: var(--color-text);
       font-size: 1rem;
       font-weight: 700;
       margin: 0 0 0.15rem;
     }
 
     .journey-item h4 {
-      color: #cbd5e1;
+      color: color-mix(in srgb, var(--color-text) 78%, var(--color-text-muted) 22%);
       font-size: 0.86rem;
       margin: 0 0 0.65rem;
       font-weight: 500;
     }
 
     .journey-item p {
-      color: #94a3b8;
+      color: var(--color-text-muted);
       font-size: 0.9rem;
       line-height: 1.7;
       margin: 0 0 0.85rem;
@@ -251,7 +251,7 @@ interface JourneyStat {
       border-radius: 999px;
       border: 1px solid rgba(5, 230, 150, 0.2);
       background: rgba(5, 230, 150, 0.08);
-      color: #b6ffe4;
+      color: color-mix(in srgb, var(--color-primary) 72%, var(--color-text) 28%);
       font-size: 0.72rem;
       font-family: 'JetBrains Mono', monospace;
       transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease;
