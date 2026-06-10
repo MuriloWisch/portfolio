@@ -2,7 +2,6 @@ import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslationService } from '../../../core/services/translation.service';
 import { ScrollService } from '../../../core/services/scroll.service';
-import { HeroTechMarqueeComponent } from './hero-tech-marquee.component';
 
 interface HomeLocalizedText {
   pt: string;
@@ -21,6 +20,12 @@ interface SkillCategoryItem {
   items: string[];
 }
 
+interface HeroStackGroup {
+  title: HomeLocalizedText;
+  icon: string;
+  items: string[];
+}
+
 /**
  * HomeComponent - Seção Hero + Sobre mim + Habilidades
  * Contém animações de scroll reveal e informações pessoais
@@ -28,7 +33,164 @@ interface SkillCategoryItem {
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, HeroTechMarqueeComponent],
+  imports: [CommonModule],
+  styles: [`
+    .hero-stack-dock {
+      position: absolute;
+      left: 50%;
+      bottom: 1.5rem;
+      z-index: 3;
+      width: min(1040px, calc(100% - 2rem));
+      transform: translateX(-50%);
+      border: 1px solid color-mix(in srgb, var(--color-border) 74%, var(--color-primary) 26%);
+      border-radius: 22px;
+      background:
+        linear-gradient(135deg, rgba(5, 230, 150, 0.08), transparent 34%),
+        linear-gradient(315deg, rgba(0, 201, 255, 0.06), transparent 30%),
+        color-mix(in srgb, var(--color-card) 94%, var(--color-surface) 6%);
+      box-shadow: 0 24px 70px color-mix(in srgb, var(--color-text) 12%, transparent);
+      backdrop-filter: blur(18px);
+      overflow: hidden;
+    }
+
+    .hero-stack-dock::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(5, 230, 150, 0.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(5, 230, 150, 0.045) 1px, transparent 1px);
+      background-size: 28px 28px;
+      mask-image: linear-gradient(90deg, rgba(0, 0, 0, 0.6), transparent 92%);
+      pointer-events: none;
+    }
+
+    .hero-stack-inner {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 0.9fr 2.1fr;
+      gap: 1rem;
+      padding: 1rem;
+      align-items: center;
+    }
+
+    .hero-stack-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      width: fit-content;
+      padding: 0.35rem 0.75rem;
+      border-radius: 999px;
+      border: 1px solid rgba(5, 230, 150, 0.24);
+      background: rgba(5, 230, 150, 0.08);
+      color: color-mix(in srgb, var(--color-primary) 74%, var(--color-text) 26%);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .hero-stack-copy {
+      margin-top: 0.6rem;
+      color: var(--color-text-muted);
+      font-size: 0.86rem;
+      line-height: 1.55;
+      max-width: 18rem;
+    }
+
+    .hero-stack-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0.75rem;
+    }
+
+    .hero-stack-group {
+      min-height: 100%;
+      padding: 0.85rem;
+      border-radius: 16px;
+      border: 1px solid color-mix(in srgb, var(--color-border) 84%, var(--color-primary) 16%);
+      background: color-mix(in srgb, var(--color-card) 90%, var(--color-surface) 10%);
+      transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .hero-stack-group:hover {
+      transform: translateY(-3px);
+      border-color: rgba(5, 230, 150, 0.34);
+      box-shadow: 0 16px 36px rgba(5, 230, 150, 0.1);
+    }
+
+    .hero-stack-group-title {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--color-text);
+      font-size: 0.82rem;
+      font-weight: 800;
+      margin-bottom: 0.55rem;
+    }
+
+    .hero-stack-group-title .material-icons {
+      width: 1.85rem;
+      height: 1.85rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 10px;
+      background: rgba(5, 230, 150, 0.1);
+      color: var(--color-primary);
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    .hero-stack-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .hero-stack-tag {
+      display: inline-flex;
+      padding: 0.2rem 0.55rem;
+      border-radius: 999px;
+      border: 1px solid rgba(5, 230, 150, 0.18);
+      background: rgba(5, 230, 150, 0.07);
+      color: color-mix(in srgb, var(--color-primary) 70%, var(--color-text) 30%);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68rem;
+      font-weight: 700;
+      line-height: 1.3;
+    }
+
+    @media (max-width: 1024px) {
+      .hero-stack-dock {
+        position: relative;
+        left: auto;
+        bottom: auto;
+        width: calc(100% - 2rem);
+        margin: -2rem auto 2rem;
+        transform: none;
+      }
+
+      .hero-stack-inner {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-stack-copy {
+        max-width: none;
+      }
+
+      .hero-stack-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 640px) {
+      .hero-stack-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  `],
   template: `
     <!-- =============================================
          SEÇÃO HERO
@@ -136,13 +298,39 @@ interface SkillCategoryItem {
         </div>
 
         <!-- Indicador de scroll -->
-        <div class="absolute bottom-28 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-bounce">
+        <div class="absolute bottom-48 left-1/2 -translate-x-1/2 hidden lg:flex flex-col items-center gap-2 animate-bounce">
           <span class="text-xs text-[var(--color-text-muted)]">scroll</span>
           <span class="material-icons text-primary-500">expand_more</span>
         </div>
       </div>
 
-      <app-hero-tech-marquee class="reveal" style="transition-delay: 0.58s"></app-hero-tech-marquee>
+      <div class="hero-stack-dock reveal" style="transition-delay: 0.58s">
+        <div class="hero-stack-inner">
+          <div>
+            <span class="hero-stack-label">
+              <span class="material-icons text-sm">terminal</span>
+              {{ currentLang() === 'en' ? 'Main stack' : 'Stack principal' }}
+            </span>
+            <p class="hero-stack-copy">
+              {{ currentLang() === 'en'
+                ? 'Technologies organized by how I actually use them in APIs, security, data, and full applications.'
+                : 'Tecnologias organizadas pelo jeito que eu realmente uso em APIs, seguranca, dados e aplicacoes completas.' }}
+            </p>
+          </div>
+
+          <div class="hero-stack-grid">
+            <article class="hero-stack-group" *ngFor="let group of heroStackGroups">
+              <h3 class="hero-stack-group-title">
+                <span class="material-icons">{{ group.icon }}</span>
+                {{ text(group.title) }}
+              </h3>
+              <div class="hero-stack-tags">
+                <span class="hero-stack-tag" *ngFor="let item of group.items">{{ item }}</span>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- =============================================
@@ -286,6 +474,29 @@ export class HomeComponent implements OnInit {
   stats = [
     { value: '3',    labelKey: 'home.stats_projects' },
     { value: 'Backend',  labelKey: 'home.stats_clients' },
+  ];
+
+  heroStackGroups: HeroStackGroup[] = [
+    {
+      title: { pt: 'Backend', en: 'Backend' },
+      icon: 'dns',
+      items: ['Java', 'Spring Boot', 'REST APIs', 'JPA'],
+    },
+    {
+      title: { pt: 'Seguranca', en: 'Security' },
+      icon: 'shield',
+      items: ['JWT', 'OAuth2', 'Spring Security'],
+    },
+    {
+      title: { pt: 'Dados', en: 'Data' },
+      icon: 'storage',
+      items: ['MySQL', 'PostgreSQL', 'Modelagem'],
+    },
+    {
+      title: { pt: 'Frontend', en: 'Frontend' },
+      icon: 'web',
+      items: ['Angular', 'TypeScript', 'Tailwind'],
+    },
   ];
 
   aboutInfo: AboutInfoItem[] = [
