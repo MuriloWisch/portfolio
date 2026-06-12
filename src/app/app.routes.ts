@@ -11,7 +11,7 @@ export const routes: Routes = [
     // Lazy load do componente principal que contém todas as seções
     loadComponent: () =>
       import('./features/home/portfolio-page.component').then(m => m.PortfolioPageComponent),
-    title: 'Murilo Wisch | Backend Developer',
+    title: 'Murilo Wisch | Backend-focused ADS Student',
   },
   {
     // Redireciona qualquer rota desconhecida para a home

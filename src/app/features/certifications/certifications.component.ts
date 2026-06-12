@@ -416,46 +416,60 @@ export class CertificationsComponent implements OnInit {
 
   journey: JourneyItem[] = [
     {
+      period: { pt: 'Desde abril de 2026', en: 'Since April 2026' },
+      title: { pt: 'Experiencia Profissional', en: 'Professional Experience' },
+      subtitle: { pt: 'TopSoft - Empresa de Tecnologia', en: 'TopSoft - Technology Company' },
+      description: {
+        pt: 'Desde abril de 2026, atuo em uma empresa especializada em solucoes de software para gestao empresarial, desenvolvendo conhecimento pratico sobre sistemas corporativos, fluxos de negocio, suporte operacional e utilizacao de ferramentas tecnologicas no ambiente profissional. Essa experiencia fortalece minha visao sobre como software e processos se conectam para gerar valor as empresas.',
+        en: 'Since April 2026, I have been working at a company specialized in software solutions for business management, developing practical knowledge of corporate systems, business workflows, operational support, and the use of technology tools in a professional environment. This experience strengthens my understanding of how software and processes connect to create value for companies.',
+      },
+      tags: {
+        pt: ['Sistemas Corporativos', 'Tecnologia Empresarial', 'Processos de Negocio', 'Suporte Operacional', 'Ambiente de Software'],
+        en: ['Corporate Systems', 'Business Technology', 'Business Processes', 'Operational Support', 'Software Environment'],
+      },
+      side: 'left',
+    },
+    {
       period: { pt: 'Agora', en: 'Now' },
       title: { pt: 'Analise e Desenvolvimento de Sistemas', en: 'Analysis and Systems Development' },
       subtitle: { pt: 'PUC Minas', en: 'PUC Minas' },
       description: {
-        pt: 'Na faculdade, venho desenvolvendo base pratica em criacao de solucoes reais, trabalho em equipe, desenvolvimento de software, banco de dados e contato com tecnologias como C# e React Native em projetos e atividades.',
-        en: 'At university, I have been building a practical foundation in creating real solutions, teamwork, software development, databases, and technologies such as C# and React Native through projects and coursework.',
+        pt: 'Na PUC Minas, venho desenvolvendo conhecimentos em engenharia de software, banco de dados, desenvolvimento de aplicacoes, trabalho em equipe e resolucao de problemas. Os projetos academicos proporcionam experiencia pratica na construcao de solucoes completas utilizando diferentes tecnologias e metodologias.',
+        en: 'At PUC Minas, I have been developing knowledge in software engineering, databases, application development, teamwork, and problem solving. Academic projects provide practical experience in building complete solutions using different technologies and methodologies.',
       },
       tags: {
-        pt: ['Trabalho em equipe', 'C#', 'React Native', 'Banco de Dados', 'Solucoes reais'],
-        en: ['Teamwork', 'C#', 'React Native', 'Databases', 'Real solutions'],
+        pt: ['Engenharia de Software', 'Banco de Dados', 'Trabalho em Equipe', 'Desenvolvimento de Aplicacoes', 'Resolucao de Problemas'],
+        en: ['Software Engineering', 'Databases', 'Teamwork', 'Application Development', 'Problem Solving'],
       },
-      side: 'left',
+      side: 'right',
     },
     {
       period: { pt: 'Foco principal', en: 'Main focus' },
       title: { pt: 'Especializacao em Backend', en: 'Backend specialization' },
       subtitle: { pt: 'Projetos, estudos praticos e evolucao tecnica', en: 'Projects, hands-on study, and technical growth' },
       description: {
-        pt: 'Direcionando a formacao para Java e Spring Boot, com experiencia em APIs REST, integracao com banco de dados, autenticacao e organizacao de arquitetura.',
-        en: 'Directing my education toward Java and Spring Boot, with experience in REST APIs, database integration, authentication, and architectural organization.',
+        pt: 'Direcionando minha carreira para o desenvolvimento backend com Java e Spring Boot, desenvolvendo projetos focados em APIs REST, autenticacao, persistencia de dados, integracao entre sistemas e boas praticas de arquitetura para aplicacoes escalaveis e seguras.',
+        en: 'Directing my career toward backend development with Java and Spring Boot, building projects focused on REST APIs, authentication, data persistence, system integration, and architecture best practices for scalable and secure applications.',
       },
       tags: {
-        pt: ['Java', 'Spring Boot', 'APIs REST', 'JPA / Hibernate', 'Spring Security'],
-        en: ['Java', 'Spring Boot', 'REST APIs', 'JPA / Hibernate', 'Spring Security'],
+        pt: ['Java', 'Spring Boot', 'APIs REST', 'JPA/Hibernate', 'Spring Security'],
+        en: ['Java', 'Spring Boot', 'REST APIs', 'JPA/Hibernate', 'Spring Security'],
       },
-      side: 'right',
+      side: 'left',
     },
     {
       period: { pt: 'Complementar', en: 'Complementary' },
       title: { pt: 'Base web e integracao com frontend', en: 'Web foundation and frontend integration' },
       subtitle: { pt: 'Projetos academicos e pessoais', en: 'Academic and personal projects' },
       description: {
-        pt: 'Desenvolvendo repertorio em interfaces, consumo de APIs e integracao entre frontend e backend para entregar aplicacoes completas e bem estruturadas.',
-        en: 'Building experience with interfaces, API consumption, and frontend-backend integration to deliver complete and well-structured applications.',
+        pt: 'Complementando minha formacao backend com conhecimentos em tecnologias web, integracao entre frontend e backend, consumo de APIs e construcao de aplicacoes completas, proporcionando uma visao abrangente do ciclo de desenvolvimento de software.',
+        en: 'Complementing my backend education with knowledge in web technologies, frontend-backend integration, API consumption, and complete application development, providing a broader view of the software development cycle.',
       },
       tags: {
-        pt: ['Angular', 'TypeScript', 'JavaScript', 'HTML', 'CSS', 'Bootstrap', 'Tailwind CSS'],
-        en: ['Angular', 'TypeScript', 'JavaScript', 'HTML', 'CSS', 'Bootstrap', 'Tailwind CSS'],
+        pt: ['Angular', 'TypeScript', 'JavaScript', 'HTML', 'CSS'],
+        en: ['Angular', 'TypeScript', 'JavaScript', 'HTML', 'CSS'],
       },
-      side: 'left',
+      side: 'right',
     },
   ];
 

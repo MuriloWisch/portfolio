@@ -9,8 +9,8 @@
   "home": {
     "greeting": "Olá, eu sou",
     "name": "Murilo Wisch",
-    "title": "Estudante de ADS com foco em Backend",
-    "subtitle": "Buscando a primeira oportunidade na área de tecnologia, com foco principal em desenvolvimento backend com Java e Spring Boot, APIs REST, segurança, bancos de dados e soluções escaláveis.",
+    "title": "Estudante de Análise e Desenvolvimento de Sistemas com foco em Backend.",
+    "subtitle": "Atualmente atuando na TopSoft, empresa de tecnologia e soluções empresariais, ampliando minha vivência com sistemas corporativos, processos de negócio e ambiente de software. Paralelamente, direciono minha formação para desenvolvimento backend com Java e Spring Boot, APIs REST, bancos de dados, segurança e arquitetura de aplicações.",
     "cta_projects": "Ver Projetos",
     "cta_contact": "Entrar em Contato",
     "available": "Disponível para oportunidades",
@@ -39,14 +39,14 @@
   },
   "certifications": {
     "title": "Formação e Evolução",
-    "subtitle": "Minha base acadêmica e os focos técnicos que venho desenvolvendo na jornada para a primeira oportunidade em tecnologia",
+    "subtitle": "Minha trajetória acadêmica, evolução técnica e experiência prática em ambiente de tecnologia, construindo uma base sólida para atuação profissional em desenvolvimento de software.",
     "issued_by": "Emitido por",
     "view_credential": "Ver Credencial",
     "year": "Ano"
   },
   "contact": {
     "title": "Contato",
-    "subtitle": "Estou em busca da minha primeira oportunidade na área e aberto para conversar sobre estágio, projetos e conexões profissionais",
+    "subtitle": "Aberto para conversar sobre oportunidades em desenvolvimento, projetos, tecnologia e conexões profissionais",
     "note_title": "Vamos conversar!",
     "note_body": "Se quiser falar sobre estágio, projetos, colaboração ou oportunidades na área, posso receber sua mensagem por e-mail.",
     "name_label": "Nome",
