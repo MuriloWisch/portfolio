@@ -1,0 +1,90 @@
+{
+  "nav": {
+    "home": "Home",
+    "projects": "Projects",
+    "certifications": "Education",
+    "contact": "Contact",
+    "download_cv": "View CV"
+  },
+  "home": {
+    "greeting": "Hi, I'm",
+    "name": "Murilo Wisch",
+    "title": "Analysis and Systems Development student focused on Backend.",
+    "subtitle": "Currently working at TopSoft, a technology and business solutions company, expanding my practical exposure to corporate systems, business processes, and software environments. In parallel, I am directing my education toward backend development with Java and Spring Boot, REST APIs, databases, security, and application architecture.",
+    "cta_projects": "View Projects",
+    "cta_contact": "Get in Touch",
+    "available": "Available for opportunities",
+    "stats_years": "current semester",
+    "stats_projects": "main projects",
+    "stats_clients": "main focus",
+    "skills_title": "Technologies I use",
+    "about_title": "About me",
+    "about_p1": "I am an Analysis and Systems Development student at PUC Minas, currently in the 3rd semester, focused on backend development using Java and Spring Boot. I have experience building REST APIs, integrating databases, and using Git for version control.",
+    "about_p2": "I am passionate about technology, software development, and challenges that create constant learning. Outside coding, I train at the gym daily, enjoy video games, and value discipline, consistency, and growth through small continuous actions.",
+    "location": "PUC Minas | 3rd semester"
+  },
+  "projects": {
+    "title": "Projects",
+    "subtitle": "A selection of my most relevant work",
+    "view_github": "GitHub",
+    "view_demo": "Demo",
+    "primary_badge": "Main Project",
+    "empty_state": "No projects in this category yet.",
+    "modal_github": "View on GitHub",
+    "modal_demo": "View Live Demo",
+    "filter_all": "All",
+    "filter_frontend": "Frontend",
+    "filter_backend": "Backend",
+    "filter_fullstack": "Full-Stack"
+  },
+  "certifications": {
+    "title": "Education and Growth",
+    "subtitle": "My academic journey, technical growth, and practical experience in a technology environment, building a solid foundation for professional work in software development.",
+    "issued_by": "Issued by",
+    "view_credential": "View Credential",
+    "year": "Year"
+  },
+  "contact": {
+    "title": "Contact",
+    "subtitle": "Open to conversations about development opportunities, projects, technology, and professional connections",
+    "note_title": "Let's talk!",
+    "note_body": "If you want to talk about internships, projects, collaboration, or tech opportunities, I can receive your message by email.",
+    "name_label": "Name",
+    "name_placeholder": "Your full name",
+    "name_error": "Name is required (minimum 2 characters)",
+    "email_label": "Email",
+    "email_placeholder": "your@email.com",
+    "email_error": "A valid email is required",
+    "subject_label": "Subject",
+    "subject_placeholder": "What do you want to talk about?",
+    "message_label": "Message",
+    "message_placeholder": "Describe your project or question...",
+    "message_error": "Message is required (minimum 20 characters)",
+    "form_hint": "When you send, your email app will open with the message already filled in.",
+    "send": "Send by Email",
+    "sending": "Opening email...",
+    "success": "Email draft opened. Now you just need to review and send it.",
+    "error": "An error occurred. Please try again.",
+    "or_find_me": "Or find me at",
+    "email_direct": "Direct Email",
+    "github_label": "GitHub",
+    "linkedin_label": "LinkedIn",
+    "location": "GitHub",
+    "response_time": "Response time",
+    "response_time_value": "Less than 24h"
+  },
+  "footer": {
+    "made_with": "Made with",
+    "and": "and",
+    "by": "by",
+    "rights": "All rights reserved.",
+    "back_to_top": "Back to top"
+  },
+  "theme": {
+    "light": "Light Mode",
+    "dark": "Dark Mode"
+  },
+  "lang": {
+    "switch_to": "Mudar para Português"
+  }
+}
