@@ -81,10 +81,8 @@ import { ScrollService } from '../../../../core/services/scroll.service';
         <!-- Bottom bar -->
         <div class="mt-10 pt-6 border-t border-[var(--color-border)] flex flex-col sm:flex-row items-center justify-between gap-4">
           <p class="text-xs text-[var(--color-text-muted)] text-center sm:text-left">
-            {{ t('footer.made_with') }}
-            <span class="text-red-500">♥</span>
-            {{ t('footer.and') }} Angular
-            {{ t('footer.by') }} <strong class="text-primary-500">Murilo Wisch</strong>.
+            {{ t('Feito por') }}
+            <strong class="text-primary-500">Murilo Wisch</strong>.
             © {{ currentYear }} — {{ t('footer.rights') }}
           </p>
 
