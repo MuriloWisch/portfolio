@@ -10,7 +10,7 @@
     "greeting": "Olá, eu sou",
     "name": "Murilo Wisch",
     "title": "Estudante de Análise e Desenvolvimento de Sistemas com foco em Backend.",
-    "subtitle": "Atualmente atuando na TopSoft, empresa de tecnologia e soluções empresariais, ampliando minha vivência com sistemas corporativos, processos de negócio e ambiente de software. Paralelamente, direciono minha formação para desenvolvimento backend com Java e Spring Boot, APIs REST, bancos de dados, segurança e arquitetura de aplicações.",
+    "subtitle": "Estudante de Análise e Desenvolvimento de Sistemas com foco em desenvolvimento backend, construindo experiência com Java e Spring Boot, APIs REST, segurança, bancos de dados e arquitetura de aplicações. Também mantenho contato com Angular, TypeScript e desenvolvimento mobile com Flutter.",
     "cta_projects": "Ver Projetos",
     "cta_contact": "Entrar em Contato",
     "available": "Disponível para oportunidades",
@@ -19,8 +19,8 @@
     "stats_clients": "foco principal",
     "skills_title": "Tecnologias que utilizo",
     "about_title": "Sobre mim",
-    "about_p1": "Sou estudante de Análise e Desenvolvimento de Sistemas na PUC Minas, atualmente no 3º período, com foco em desenvolvimento backend utilizando Java e Spring Boot. Tenho experiência na construção de APIs REST, integração com bancos de dados e versionamento com Git.",
-    "about_p2": "Sou apaixonado por tecnologia, desenvolvimento de software e desafios que geram aprendizado constante. Fora do código, treino na academia diariamente, gosto de videogames e valorizo disciplina, consistência e evolução por meio de pequenas ações contínuas.",
+    "about_p1": "Sou estudante de Análise e Desenvolvimento de Sistemas na PUC Minas, atualmente no 3º período, com foco em desenvolvimento backend utilizando Java e Spring Boot. Tenho experiência com APIs REST, autenticação e autorização com JWT, OAuth2 e Spring Security, persistência com JPA/Hibernate, bancos de dados relacionais e versionamento com Git.",
+    "about_p2": "Também desenvolvo interfaces e integrações com Angular, TypeScript e JavaScript, além de explorar desenvolvimento mobile com Flutter e o padrão BLoC. Sou apaixonado por tecnologia, código limpo e desafios que geram aprendizado constante; fora do código, treino na academia, gosto de videogames e valorizo disciplina, consistência e evolução contínua.",
     "location": "PUC Minas | 3º período"
   },
   "projects": {

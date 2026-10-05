@@ -418,14 +418,14 @@ export class CertificationsComponent implements OnInit {
     {
       period: { pt: 'Desde abril de 2026', en: 'Since April 2026' },
       title: { pt: 'Experiencia Profissional', en: 'Professional Experience' },
-      subtitle: { pt: 'TopSoft - Empresa de Tecnologia', en: 'TopSoft - Technology Company' },
+      subtitle: { pt: 'Talher - Experiência profissional', en: 'Talher - Professional experience' },
       description: {
-        pt: 'Desde abril de 2026, atuo em uma empresa especializada em solucoes de software para gestao empresarial, desenvolvendo conhecimento pratico sobre sistemas corporativos, fluxos de negocio, suporte operacional e utilizacao de ferramentas tecnologicas no ambiente profissional. Essa experiencia fortalece minha visao sobre como software e processos se conectam para gerar valor as empresas.',
-        en: 'Since April 2026, I have been working at a company specialized in software solutions for business management, developing practical knowledge of corporate systems, business workflows, operational support, and the use of technology tools in a professional environment. This experience strengthens my understanding of how software and processes connect to create value for companies.',
+        pt: 'Desde abril de 2026, atuo na Talher, desenvolvendo experiência prática em tecnologia, sistemas, processos de negócio e suporte às rotinas profissionais. Essa vivência fortalece minha visão sobre como software, pessoas e processos se conectam para gerar valor às empresas.',
+        en: 'Since April 2026, I have been working at Talher, gaining practical experience with technology, systems, business processes, and support for professional workflows. This experience strengthens my understanding of how software, people, and processes connect to create value for companies.',
       },
       tags: {
-        pt: ['Sistemas Corporativos', 'Tecnologia Empresarial', 'Processos de Negocio', 'Suporte Operacional', 'Ambiente de Software'],
-        en: ['Corporate Systems', 'Business Technology', 'Business Processes', 'Operational Support', 'Software Environment'],
+        pt: ['Tecnologia', 'Sistemas', 'Processos de Negócio', 'Suporte Operacional', 'Ambiente Profissional'],
+        en: ['Technology', 'Systems', 'Business Processes', 'Operational Support', 'Professional Environment'],
       },
       side: 'left',
     },

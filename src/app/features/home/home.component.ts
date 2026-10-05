@@ -297,7 +297,7 @@ export class HomeComponent implements OnInit {
       title: { pt: 'Backend', en: 'Backend' },
       icon: 'dns',
       description: {
-        pt: 'Base principal de desenvolvimento e construcao de APIs.',
+        pt: 'Base principal de desenvolvimento e construção de APIs.',
         en: 'Main foundation for development and API construction.',
       },
       items: ['Java', 'Spring Boot', 'APIs REST', 'JPA / Hibernate', 'MVC', 'Microservicos'],
@@ -306,7 +306,7 @@ export class HomeComponent implements OnInit {
       title: { pt: 'Seguranca', en: 'Security' },
       icon: 'shield',
       description: {
-        pt: 'Autenticacao, autorizacao e protecao de acesso.',
+        pt: 'Autenticação, autorização e proteção de acesso.',
         en: 'Authentication, authorization, and access protection.',
       },
       items: ['Spring Security', 'OAuth2', 'JWT'],
@@ -315,7 +315,7 @@ export class HomeComponent implements OnInit {
       title: { pt: 'Banco de Dados', en: 'Databases' },
       icon: 'storage',
       description: {
-        pt: 'Persistencia, consultas e estruturacao de dados.',
+        pt: 'Persistência, consultas e estruturação de dados.',
         en: 'Persistence, queries, and data structuring.',
       },
       items: ['MySQL', 'PostgreSQL', 'Modelagem de dados'],
@@ -333,10 +333,10 @@ export class HomeComponent implements OnInit {
       title: { pt: 'Web', en: 'Web' },
       icon: 'web',
       description: {
-        pt: 'Interfaces e integracao com aplicacoes frontend.',
+        pt: 'Interfaces e integração com aplicações frontend.',
         en: 'Interfaces and integration with frontend applications.',
       },
-      items: ['Angular', 'TypeScript', 'JavaScript', 'HTML', 'CSS', 'Bootstrap', 'Tailwind CSS', 'React Native'],
+      items: ['Angular', 'TypeScript', 'JavaScript', 'HTML', 'CSS', 'Bootstrap', 'Tailwind CSS', 'Flutter', 'Dart', 'React Native'],
     },
   ];
 
